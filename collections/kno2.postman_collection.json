@@ -1,0 +1,170 @@
+{
+  "info": {
+    "name": "Kno2 Communication API",
+    "description": "Confirmed messaging surface of the Kno2 Communication API, grounded in Kno2's official Kno2.ApiTestClient (github.com/Kno2/Kno2.ApiTestClient). Base host is a per-integrator subscription tenant. OAuth2 client-credentials Bearer auth; IP allowlist and TLS 1.2+ required. FHIR and cross-network record-retrieval products exist but their paths are partner-provisioned and not included here.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [ { "key": "token", "value": "{{accessToken}}", "type": "string" } ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://{{subscription}}.kno2fy.com" },
+    { "key": "subscription", "value": "your-subscription" },
+    { "key": "clientId", "value": "" },
+    { "key": "clientSecret", "value": "" },
+    { "key": "accessToken", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Issue an access token",
+          "request": {
+            "method": "POST",
+            "auth": { "type": "basic", "basic": [ { "key": "username", "value": "{{clientId}}" }, { "key": "password", "value": "{{clientSecret}}" } ] },
+            "header": [ { "key": "Content-Type", "value": "application/x-www-form-urlencoded" } ],
+            "body": { "mode": "urlencoded", "urlencoded": [ { "key": "grant_type", "value": "client_credentials" } ] },
+            "url": { "raw": "{{baseUrl}}/api/token", "host": [ "{{baseUrl}}" ], "path": [ "api", "token" ] },
+            "description": "OAuth2 client-credentials token endpoint. CONFIRMED from ApiTestClient."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messaging (Send)",
+      "item": [
+        {
+          "name": "Request a draft message",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/messages", "host": [ "{{baseUrl}}" ], "path": [ "api", "messages" ] },
+            "description": "Creates a new draft message and returns its id. CONFIRMED."
+          }
+        },
+        {
+          "name": "Populate / update a draft message",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/api/messages/:id", "host": [ "{{baseUrl}}" ], "path": [ "api", "messages", ":id" ], "variable": [ { "key": "id", "value": "" } ] },
+            "description": "Populate the draft with patient, recipient Direct address, document type, and metadata. CONFIRMED."
+          }
+        },
+        {
+          "name": "Upload an attachment",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": { "mode": "formdata", "formdata": [ { "key": "file", "type": "file", "src": [] } ] },
+            "url": { "raw": "{{baseUrl}}/api/messages/:id/attachments/:attachmentId", "host": [ "{{baseUrl}}" ], "path": [ "api", "messages", ":id", "attachments", ":attachmentId" ], "variable": [ { "key": "id", "value": "" }, { "key": "attachmentId", "value": "" } ] },
+            "description": "Uploads a clinical document (CCDA, PDF, image, HL7) as multipart/form-data. CONFIRMED."
+          }
+        },
+        {
+          "name": "Send a message",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/api/messages/:id/send", "host": [ "{{baseUrl}}" ], "path": [ "api", "messages", ":id", "send" ], "variable": [ { "key": "id", "value": "" } ] },
+            "description": "Releases/sends the message over Direct Secure Messaging or document exchange. CONFIRMED."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Intake (Receive / Find)",
+      "item": [
+        {
+          "name": "Search / find messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/messages?statuses=processed&processedtypes=AwaitingEMRExport&orderBy=updatedDate&orderDir=desc&pageSize=10&pageStart=1",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "messages" ],
+              "query": [
+                { "key": "statuses", "value": "processed" },
+                { "key": "processedtypes", "value": "AwaitingEMRExport" },
+                { "key": "orderBy", "value": "updatedDate" },
+                { "key": "orderDir", "value": "desc" },
+                { "key": "pageSize", "value": "10" },
+                { "key": "pageStart", "value": "1" }
+              ]
+            },
+            "description": "Finds inbound messages awaiting EMR export (RECEIVE / FIND queue). CONFIRMED."
+          }
+        },
+        {
+          "name": "Retrieve a message",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/messages/:id", "host": [ "{{baseUrl}}" ], "path": [ "api", "messages", ":id" ], "variable": [ { "key": "id", "value": "" } ] },
+            "description": "Retrieves a single message by id. CONFIRMED."
+          }
+        },
+        {
+          "name": "Retrieve an attachment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/messages/:id/attachments/:attachmentId", "host": [ "{{baseUrl}}" ], "path": [ "api", "messages", ":id", "attachments", ":attachmentId" ], "variable": [ { "key": "id", "value": "" }, { "key": "attachmentId", "value": "" } ] },
+            "description": "Retrieves attachment metadata or binary content. CONFIRMED."
+          }
+        },
+        {
+          "name": "Mark an attachment read",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/messages/:id/attachments/:attachmentId/read", "host": [ "{{baseUrl}}" ], "path": [ "api", "messages", ":id", "attachments", ":attachmentId", "read" ], "variable": [ { "key": "id", "value": "" }, { "key": "attachmentId", "value": "" } ] },
+            "description": "Records that an attachment has been read/consumed. CONFIRMED."
+          }
+        },
+        {
+          "name": "Process a message",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/messages/:id/process", "host": [ "{{baseUrl}}" ], "path": [ "api", "messages", ":id", "process" ], "variable": [ { "key": "id", "value": "" } ] },
+            "description": "Marks a message as processed / records a read event. CONFIRMED."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Directory",
+      "item": [
+        {
+          "name": "Validate Direct addresses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/directory/validate?addresses=example@direct.kno2fy.com",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "directory", "validate" ],
+              "query": [ { "key": "addresses", "value": "example@direct.kno2fy.com" } ]
+            },
+            "description": "Validates one or more Direct Secure Messaging addresses. CONFIRMED."
+          }
+        },
+        {
+          "name": "List document types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/documenttypes", "host": [ "{{baseUrl}}" ], "path": [ "api", "documenttypes" ] },
+            "description": "Lists document types available to the subscription. CONFIRMED."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kno2 Communication API",
+    "version": "1.0",
+    "description": "Confirmed messaging surface of the Kno2 Communication API, grounded in Kno2's official Kno2.ApiTestClient. Base host is a per-integrator subscription tenant (https://{{subscription}}.kno2fy.com). OAuth2 client-credentials Bearer auth."
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{accessToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Authentication", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Issue an access token", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{subscription}}.kno2fy.com/api/token",
+            "auth": { "type": "basic", "username": "{{clientId}}", "password": "{{clientSecret}}" },
+            "body": { "type": "urlencoded", "data": "grant_type=client_credentials" }
+          },
+          "docs": "OAuth2 client-credentials token endpoint. HTTP Basic base64(clientId:clientSecret). Returns a Bearer access_token. CONFIRMED from ApiTestClient."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Messaging (Send)", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Request a draft message", "type": "http" },
+          "http": { "method": "PUT", "url": "https://{{subscription}}.kno2fy.com/api/messages" },
+          "docs": "Creates a new draft message and returns its id. CONFIRMED."
+        },
+        {
+          "info": { "name": "Populate / update a draft message", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://{{subscription}}.kno2fy.com/api/messages/:id",
+            "params": [ { "name": "id", "value": "", "type": "path", "description": "Message id." } ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Populate the draft with patient, recipient Direct address, document type, and metadata. CONFIRMED."
+        },
+        {
+          "info": { "name": "Upload an attachment", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{subscription}}.kno2fy.com/api/messages/:id/attachments/:attachmentId",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "Message id." },
+              { "name": "attachmentId", "value": "", "type": "path", "description": "Attachment id." }
+            ],
+            "body": { "type": "formdata", "data": "" }
+          },
+          "docs": "Uploads a clinical document (CCDA, PDF, image, HL7) as multipart/form-data. CONFIRMED."
+        },
+        {
+          "info": { "name": "Send a message", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{subscription}}.kno2fy.com/api/messages/:id/send",
+            "params": [ { "name": "id", "value": "", "type": "path", "description": "Message id." } ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Releases/sends the message over Direct Secure Messaging or document exchange. CONFIRMED."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Intake (Receive / Find)", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Search / find messages", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{subscription}}.kno2fy.com/api/messages?statuses=processed&processedtypes=AwaitingEMRExport&orderBy=updatedDate&orderDir=desc&pageSize=10&pageStart=1"
+          },
+          "docs": "Finds inbound messages awaiting EMR export (the RECEIVE / FIND queue). CONFIRMED."
+        },
+        {
+          "info": { "name": "Retrieve a message", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{subscription}}.kno2fy.com/api/messages/:id",
+            "params": [ { "name": "id", "value": "", "type": "path", "description": "Message id." } ]
+          },
+          "docs": "Retrieves a single message by id. CONFIRMED."
+        },
+        {
+          "info": { "name": "Retrieve an attachment", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{subscription}}.kno2fy.com/api/messages/:id/attachments/:attachmentId",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "Message id." },
+              { "name": "attachmentId", "value": "", "type": "path", "description": "Attachment id." }
+            ]
+          },
+          "docs": "Retrieves attachment metadata or binary content. CONFIRMED."
+        },
+        {
+          "info": { "name": "Mark an attachment read", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://{{subscription}}.kno2fy.com/api/messages/:id/attachments/:attachmentId/read",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "Message id." },
+              { "name": "attachmentId", "value": "", "type": "path", "description": "Attachment id." }
+            ]
+          },
+          "docs": "Records that an attachment has been read/consumed. CONFIRMED."
+        },
+        {
+          "info": { "name": "Process a message", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{subscription}}.kno2fy.com/api/messages/:id/process",
+            "params": [ { "name": "id", "value": "", "type": "path", "description": "Message id." } ]
+          },
+          "docs": "Marks a message as processed / records a read event. CONFIRMED."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Directory", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Validate Direct addresses", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{subscription}}.kno2fy.com/api/directory/validate?addresses=example@direct.kno2fy.com"
+          },
+          "docs": "Validates one or more Direct Secure Messaging addresses. CONFIRMED."
+        },
+        {
+          "info": { "name": "List document types", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{subscription}}.kno2fy.com/api/documenttypes"
+          },
+          "docs": "Lists document types available to the subscription. CONFIRMED."
+        }
+      ]
+    }
+  ]
+}

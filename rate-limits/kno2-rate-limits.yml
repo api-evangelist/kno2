@@ -1,0 +1,59 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Kno2
+providerId: kno2
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Healthcare Interoperability
+- Direct Secure Messaging
+- FHIR
+- Rate Limiting
+- Quotas
+description: >-
+  Kno2 does not publish fixed numeric rate limits for the Communication API. As a
+  partner/enterprise, per-subscription API, throughput and any throttling are
+  governed by the subscription agreement rather than a public per-minute cap.
+  Kno2's own reference client consumes inbound messages by polling GET
+  /api/messages on a loop with a 10-second wait between empty polls, which
+  implies clients are expected to poll on a modest cadence rather than hammer the
+  endpoint. All values here are modeled - confirm concrete limits with Kno2
+  during onboarding.
+notes: >-
+  Kno2 requires TLS 1.2+ and an IP allowlist per subscription. Implement
+  exponential backoff with jitter and honor Retry-After on any 429 responses.
+  Poll intake queues on a reasonable interval (the reference client uses ~10s).
+sources:
+- https://kno2.com/api/
+- https://developer.kno2.com
+- https://github.com/Kno2/Kno2.ApiTestClient
+responseCodes:
+  throttled: 429
+limits:
+- name: Communication API Requests
+  scope: subscription
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented; governed per subscription agreement.
+- name: Intake Polling
+  scope: subscription
+  metric: requests
+  limit: client-paced (~10s interval in reference client)
+  notes: The reference client polls GET /api/messages and waits 10 seconds between empty polls.
+- name: IP Allowlist
+  scope: subscription
+  metric: source-ip
+  limit: allowlisted only
+  notes: Calls are rejected unless the caller's public IP is allowlisted by a Kno2 admin.
+policies:
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+- name: Polling Cadence
+  description: Intake/receive is client-initiated polling; poll on a modest interval rather than continuously.
+- name: Transport Security
+  description: TLS 1.2 or higher is required for all integrations.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

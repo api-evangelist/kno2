@@ -1,0 +1,167 @@
+aid: kno2
+url: https://raw.githubusercontent.com/api-evangelist/kno2/refs/heads/main/apis.yml
+name: Kno2
+kind: company
+description: Kno2 provides Interoperability as a Service for healthcare - a single
+  Communication API to SEND, RECEIVE, and FIND patient information across the
+  healthcare ecosystem. One connection reaches Direct Secure Messaging, clinical
+  document exchange, HL7 FHIR resources, HL7 V2.x, cloud fax, and national record
+  location and retrieval through Kno2's private network, Carequality, eHealth
+  Exchange, and TEFCA (Kno2 is a federally designated QHIN). API access is
+  partner/enterprise gated - integrators are provisioned a per-subscription tenant
+  host with OAuth2 client-credentials keys and an IP allowlist; a staging sandbox
+  is available through the Kno2 Developer Program.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Healthcare Interoperability
+- Clinical Records
+- Health Information Exchange
+- Direct Secure Messaging
+- FHIR
+- Clinical Documents
+- Patient Records
+- Healthcare
+- HIE
+- Care Coordination
+- QHIN
+- TEFCA
+- Carequality
+created: '2026-07-12'
+modified: '2026-07-12'
+specificationVersion: '0.19'
+apis:
+- aid: kno2:kno2-messaging-api
+  name: Kno2 Messaging API
+  tags:
+  - Direct Secure Messaging
+  - Document Exchange
+  - Send
+  - Attachments
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.kno2.com
+  baseURL: https://{subscription}.kno2fy.com
+  properties:
+  - url: https://kno2.com/api/
+    type: Documentation
+  - url: https://developer.kno2.com
+    type: APIReference
+  - url: https://github.com/Kno2/Kno2.ApiTestClient
+    type: SourceCode
+  - url: openapi/kno2-openapi.yml
+    type: OpenAPI
+  - url: collections/kno2.postman_collection.json
+    type: PostmanCollection
+  - url: collections/kno2.opencollection.json
+    type: OpenCollection
+  description: The core SEND surface. Request a draft message, populate it with the
+    patient, recipient Direct address, document type, and metadata, attach one or
+    more clinical documents (CCDA, PDF, images, HL7), then send it as Direct Secure
+    Messaging or document exchange. Confirmed endpoints under api/messages derived
+    from Kno2's official ApiTestClient. Base host is per-integrator subscription.
+- aid: kno2:kno2-intake-api
+  name: Kno2 Intake and Retrieval API
+  tags:
+  - Receive
+  - Find
+  - Intake
+  - Clinical Documents
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.kno2.com
+  baseURL: https://{subscription}.kno2fy.com
+  properties:
+  - url: https://kno2.com/api/
+    type: Documentation
+  - url: https://github.com/Kno2/Kno2.ApiTestClient
+    type: SourceCode
+  - url: openapi/kno2-openapi.yml
+    type: OpenAPI
+  - url: collections/kno2.postman_collection.json
+    type: PostmanCollection
+  - url: collections/kno2.opencollection.json
+    type: OpenCollection
+  description: The RECEIVE surface. Search the intake queue for inbound/processed
+    messages awaiting EMR export, retrieve a message and its attachment metadata
+    and content, mark attachments read, and process messages. Confirmed endpoints
+    under api/messages (search, process, attachment read) derived from Kno2's
+    official ApiTestClient.
+- aid: kno2:kno2-directory-api
+  name: Kno2 Directory API
+  tags:
+  - Directory
+  - Address Validation
+  - Document Types
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.kno2.com
+  baseURL: https://{subscription}.kno2fy.com
+  properties:
+  - url: https://kno2.com/api/
+    type: Documentation
+  - url: https://github.com/Kno2/Kno2.ApiTestClient
+    type: SourceCode
+  - url: openapi/kno2-openapi.yml
+    type: OpenAPI
+  description: Validate Direct Secure Messaging addresses and endpoints before
+    sending, and list the document types available to the current subscription.
+    Confirmed endpoints api/directory/validate and api/documenttypes derived from
+    Kno2's official ApiTestClient. Kno2 also markets broader national provider and
+    organization directory search (endpoint paths not publicly confirmed).
+- aid: kno2:kno2-fhir-api
+  name: Kno2 FHIR API
+  tags:
+  - FHIR
+  - USCDI
+  - Clinical Records
+  - Patient Facing
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://kno2.com/connectivity/
+  baseURL: https://{subscription}.kno2fy.com
+  properties:
+  - url: https://kno2.com/wp-content/uploads/2022/09/Kno2-Connectivity-FHIR-2.1.pdf
+    type: Documentation
+  description: HL7 FHIR (DSTU3/R4) resource query and retrieval at scale, including
+    USCDI data classes and patient demographic search, brokered through Kno2's
+    gateway to Carequality and national FHIR endpoints. MODELED - Kno2 documents
+    FHIR as a product capability of the Communication API but the FHIR base URL and
+    resource paths are partner-provisioned and not publicly documented.
+- aid: kno2:kno2-record-query-api
+  name: Kno2 Patient Record Query API
+  tags:
+  - Health Information Exchange
+  - QHIN
+  - TEFCA
+  - Carequality
+  - Care Coordination
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://kno2.com/networks/
+  baseURL: https://{subscription}.kno2fy.com
+  properties:
+  - url: https://kno2.com/api/
+    type: Documentation
+  description: On-demand patient record location and retrieval across national
+    networks - Kno2's private network, Carequality, eHealth Exchange, and TEFCA
+    (Kno2 is a designated QHIN). Find a patient, query participating organizations,
+    and retrieve complete records on demand. MODELED - a documented product
+    capability of the Communication API; the specific query/retrieve endpoint paths
+    are partner-provisioned and not publicly documented.
+common:
+- type: DomainSecurity
+  url: security/kno2-domain-security.yml
+- type: Authentication
+  url: authentication/kno2-authentication.yml
+- type: GitHubOrganization
+  url: https://github.com/Kno2
+- type: LinkedIn
+  url: https://www.linkedin.com/company/kno2
+- type: Website
+  url: https://kno2.com
+- type: Documentation
+  url: https://developer.kno2.com
+- type: Plans
+  url: plans/kno2-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/kno2-rate-limits.yml
+- type: FinOps
+  url: finops/kno2-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

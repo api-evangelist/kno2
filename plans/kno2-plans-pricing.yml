@@ -1,0 +1,86 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Kno2
+providerId: kno2
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Healthcare Interoperability
+- Direct Secure Messaging
+- FHIR
+- Health Information Exchange
+- Plans
+description: >-
+  Kno2 does not publish self-service, list-price API plans. Access to the Kno2
+  Communication API is sold as a partner/enterprise subscription arranged through
+  Kno2 sales and the Developer Program. Pricing is quoted per engagement and is
+  typically driven by the networks and channels enabled (Direct Secure Messaging,
+  document exchange, FHIR, cloud fax, and record retrieval across Carequality /
+  eHealth Exchange / TEFCA), the number of subscriptions/addresses, and message
+  or transaction volume. No public numeric rates are documented, so nothing here
+  is reconciled - all tiers below are modeled from Kno2's public positioning.
+notes: >-
+  Verify commercial terms directly with Kno2 (info@kno2.com, 888.390.6394) or via
+  the developer portal at developer.kno2.com. A staging sandbox is available to
+  Developer Program participants for integration and testing.
+sources:
+- https://kno2.com/
+- https://kno2.com/api/
+- https://developer.kno2.com
+- https://github.com/Kno2/Kno2.ApiTestClient
+plans:
+- id: kno2-developer-sandbox
+  name: Developer Program (Sandbox)
+  type: free
+  description: >-
+    Staging/sandbox access for approved integrators to build and test against the
+    Communication API before going live. Provisioned per subscription with OAuth2
+    client credentials and an IP allowlist. Modeled - request access via the Kno2
+    Developer Program.
+  entries:
+  - label: Sandbox Access
+    name: sandbox_access
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: usa
+    unit: 1
+    price: contact sales (Developer Program)
+    userMultiplied: false
+  elements:
+  - name: Staging Tenant Host
+  - name: OAuth2 Client Credentials
+  - name: Direct and Document Exchange Testing
+- id: kno2-communication-api
+  name: Communication API Subscription
+  type: enterprise
+  description: >-
+    Production partner/enterprise subscription to the Kno2 Communication API. One
+    connection reaches Direct Secure Messaging, document exchange, HL7 FHIR, HL7
+    V2.x, cloud fax, and national record location/retrieval. Priced per
+    engagement by enabled networks/channels and volume. Modeled - no public list
+    price.
+  entries:
+  - label: Communication API Subscription
+    name: communication_api
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: usa
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Direct Secure Messaging
+  - name: Clinical Document Exchange
+  - name: HL7 FHIR Resources
+  - name: HL7 V2.x
+  - name: Cloud Fax
+  - name: Carequality / eHealth Exchange / TEFCA (QHIN)
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

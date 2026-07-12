@@ -1,0 +1,127 @@
+aid: kno2
+name: Kno2
+review:
+  question: Does Kno2 expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-12'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Kno2's Communication API is
+    request/response REST over HTTPS (OAuth2 client-credentials Bearer auth).
+    Its confirmed surface - api/token, api/messages and sub-resources,
+    api/documenttypes, api/directory/validate - is all synchronous REST. The
+    reference integrator client (Kno2.ApiTestClient) consumes inbound messages
+    by POLLING api/messages on a loop (client-initiated HTTP GET), not via any
+    server-push transport. No WebSocket (ws:// or wss://) or SSE endpoint is
+    documented on Kno2's own API, so there is no server-push transport to model.
+findings:
+  summary: |
+    Kno2 does not publish a documented public WebSocket API. Kno2 is a
+    healthcare Interoperability-as-a-Service network offering a single
+    Communication API to SEND, RECEIVE, and FIND patient information across
+    Direct Secure Messaging, clinical document exchange, HL7 FHIR, HL7 V2.x,
+    cloud fax, and national record location/retrieval (Carequality, eHealth
+    Exchange, TEFCA; Kno2 is a designated QHIN). The confirmed API surface is
+    pure request/response REST over HTTPS, authenticated with an OAuth2
+    client-credentials Bearer token minted at POST /api/token. Inbound messages
+    are retrieved by polling GET /api/messages (the reference client loops on it,
+    waiting 10 seconds between empty polls) - there is no realtime,
+    bidirectional, or streaming WebSocket endpoint documented anywhere on Kno2's
+    own API.
+  accessModel: |
+    API access is PARTNER / ENTERPRISE gated. There is no self-service public
+    base host. Each integrator is provisioned a per-subscription tenant host
+    (production https://{subscription}.kno2fy.com, staging sandbox
+    https://{subscription}.kno2-stage.com) plus an OAuth2 client id, client
+    secret, and app id, and must have their machine's public IP address
+    allowlisted by a Kno2 admin. Onboarding runs through the Kno2 Developer
+    Program and the developer portal at https://developer.kno2.com (login-walled,
+    hosted on ReadMe). Because this is protected health information exchange, use
+    is governed by HIPAA and Kno2's network/QHIN participation agreements.
+  sourcing: |
+    The endpoint paths, HTTP verbs, and the OAuth2 client-credentials token flow
+    are CONFIRMED from Kno2's own open-source integrator reference client,
+    Kno2.ApiTestClient (github.com/Kno2/Kno2.ApiTestClient) - specifically its
+    app.config URI templates and ApiHelper.cs. Request/response schemas are
+    MODELED from that client and Kno2 product documentation, because the
+    field-level contracts sit behind the login-walled developer portal. Kno2's
+    FHIR resource query and cross-network record-retrieval capabilities are real
+    documented products but their specific endpoint paths are partner-provisioned
+    and not public, so they were NOT invented in the OpenAPI.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://{subscription}.kno2fy.com
+      documented: true
+      note: >-
+        Communication API. Per-subscription tenant host; staging sandbox at
+        https://{subscription}.kno2-stage.com. OAuth2 client-credentials Bearer auth.
+    - protocol: HTTP Poll
+      scheme: https
+      documented: true
+      note: >-
+        Inbound/intake messages are retrieved by polling GET /api/messages
+        (statuses=processed, processedtypes=AwaitingEMRExport). Client-initiated,
+        not server push.
+    - protocol: Direct Secure Messaging
+      scheme: smtp/xdr
+      documented: true
+      note: >-
+        Direct Secure Messaging is a healthcare transport (S/MIME over SMTP/XDR),
+        brokered by Kno2 and driven through the REST api/messages surface. Not a
+        WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: >-
+        No WebSocket endpoint is documented in Kno2's Communication API, developer
+        portal, product PDFs, or reference client as of the review date.
+  endpointsConfirmedRest:
+    - POST   https://{subscription}.kno2fy.com/api/token
+    - PUT    https://{subscription}.kno2fy.com/api/messages
+    - GET    https://{subscription}.kno2fy.com/api/messages
+    - GET    https://{subscription}.kno2fy.com/api/messages/{id}
+    - PUT    https://{subscription}.kno2fy.com/api/messages/{id}
+    - POST   https://{subscription}.kno2fy.com/api/messages/{id}/send
+    - POST   https://{subscription}.kno2fy.com/api/messages/{id}/process
+    - POST   https://{subscription}.kno2fy.com/api/messages/{id}/attachments/{attachmentId}
+    - GET    https://{subscription}.kno2fy.com/api/messages/{id}/attachments/{attachmentId}
+    - PUT    https://{subscription}.kno2fy.com/api/messages/{id}/attachments/{attachmentId}/read
+    - GET    https://{subscription}.kno2fy.com/api/documenttypes
+    - GET    https://{subscription}.kno2fy.com/api/directory/validate
+  endpointsModeled:
+    - note: FHIR resource query/retrieval (DSTU3/R4, USCDI) - product real, paths not public.
+    - note: Cross-network patient record location/retrieval (Carequality, eHealth Exchange, TEFCA/QHIN) - product real, paths not public.
+sources:
+  - url: https://kno2.com/
+    type: Website
+    note: Kno2 healthcare communication network; QHIN, Carequality implementor.
+  - url: https://kno2.com/api/
+    type: Documentation
+    note: Communication API overview - SEND, RECEIVE, FIND; Direct, FHIR, HL7 V2.x, fax, 360X.
+  - url: https://kno2.com/wp-content/uploads/2022/12/Kno2-Communication-API.pdf
+    type: Documentation
+    note: Communication API product brief.
+  - url: https://kno2.com/wp-content/uploads/2022/09/Kno2-Connectivity-FHIR-2.1.pdf
+    type: Documentation
+    note: FHIR at scale (DSTU3, R4), USCDI, Carequality-gateway FHIR endpoints.
+  - url: https://developer.kno2.com
+    type: APIReference
+    note: Developer portal (ReadMe-hosted, login-walled). Redirects to OAuth login.
+  - url: https://github.com/Kno2/Kno2.ApiTestClient
+    type: SourceCode
+    note: >-
+      Official integrator reference client. app.config + ApiHelper.cs confirm
+      api/token OAuth2 client-credentials flow and all api/messages endpoint paths
+      and verbs. Requires client id/secret/app id and IP allowlist; TLS 1.2+.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or other server-push surface exists on Kno2's own API. The
+    Communication API is request/response REST with client-initiated polling for
+    intake, so no AsyncAPI document was created. The catalog entry is grounded on
+    CONFIRMED endpoints from Kno2's official reference client; FHIR and
+    cross-network record-retrieval products are noted as modeled because their
+    endpoint paths are partner-provisioned and not publicly documented.

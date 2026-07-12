@@ -1,0 +1,96 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Kno2
+providerId: kno2
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Healthcare Interoperability
+- Direct Secure Messaging
+- FHIR
+- Health Information Exchange
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Kno2 Communication API spend. Kno2 is a partner/enterprise
+  offering with no public list pricing, so cost is established by contract and
+  typically driven by the networks and channels enabled (Direct Secure Messaging,
+  document exchange, FHIR, cloud fax, record retrieval across Carequality /
+  eHealth Exchange / TEFCA), the number of subscriptions/addresses, and message
+  or transaction volume. No public per-unit rates exist; this view is modeled and
+  not reconciled - use it to structure cost tracking, not to estimate a bill.
+notes: >-
+  Obtain actual rates and billing terms from Kno2 (info@kno2.com). Meters below
+  are the plausible cost drivers to track internally; confirm which apply to your
+  subscription during contracting.
+sources:
+- https://kno2.com/
+- https://kno2.com/api/
+- https://developer.kno2.com
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Kno2
+serviceCategory: Healthcare Interoperability
+billingModel:
+  pricingCategory: Contract-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: Kno2 Communication API
+  ServiceCategory: Healthcare Interoperability
+  ProviderName: Kno2
+  PublisherName: Kno2
+  InvoiceIssuerName: Kno2
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Contract-Based
+meters:
+- name: messages
+  description: Messages sent/received through the Communication API (Direct, document exchange, fax).
+  unit: messages
+  aggregation: sum
+  dimensions:
+  - subscription
+  - channel
+- name: record_queries
+  description: Patient record location/retrieval transactions across Carequality / eHealth Exchange / TEFCA.
+  unit: queries
+  aggregation: sum
+  dimensions:
+  - subscription
+  - network
+- name: fhir_requests
+  description: FHIR resource query/retrieval requests.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - subscription
+- name: subscriptions
+  description: Provisioned subscriptions / Direct addresses under the account.
+  unit: subscriptions
+  aggregation: max
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track message, FHIR, and cross-network query volume per subscription and channel/network.
+- name: Allocation
+  description: Map subscriptions and Direct addresses to internal teams/facilities so spend maps to cost centers.
+- name: Optimization
+  description: Enable only the networks and channels you use; consolidate onto the single Communication API rather than point connections.
+- name: Accountability
+  description: Assign owners per subscription and review monthly message/query volume against the contract.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

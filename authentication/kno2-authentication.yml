@@ -1,0 +1,47 @@
+generated: '2026-07-12'
+method: derived
+source: openapi/kno2-openapi.yml
+notes: >-
+  Confirmed from Kno2's official Kno2.ApiTestClient. The token endpoint,
+  client-credentials grant, HTTP Basic client authentication, and Bearer usage
+  are grounded in the reference client's ApiHelper.cs and app.config; full
+  field-level details are provisioned per partner via the login-walled developer
+  portal at developer.kno2.com.
+summary:
+  types:
+  - oauth2
+  - http
+schemes:
+- name: oauth2ClientCredentials
+  type: oauth2
+  flow: clientCredentials
+  tokenUrl: https://{subscription}.kno2fy.com/api/token
+  description: >-
+    OAuth2 client-credentials flow. Authenticate to POST /api/token with HTTP
+    Basic using base64(client_id:client_secret) and grant_type=client_credentials
+    to receive a Bearer access token. A grant_type=refresh_token flow is also
+    supported. Credentials (client id, client secret, app id) are provisioned by
+    Kno2, and your public IP must be allowlisted by a Kno2 admin.
+  sources:
+  - https://github.com/Kno2/Kno2.ApiTestClient
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: >-
+    All Communication API requests carry the OAuth2 access token as
+    `Authorization: Bearer <token>`.
+  sources:
+  - openapi/kno2-openapi.yml
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: >-
+    HTTP Basic base64(client_id:client_secret), used only against /api/token to
+    obtain a Bearer token.
+  sources:
+  - https://github.com/Kno2/Kno2.ApiTestClient
+notesSecurity: >-
+  Kno2 requires TLS 1.2 or higher for all integrations and enforces an IP
+  allowlist per subscription. Exchange involves protected health information
+  (PHI) and is governed by HIPAA and Kno2's network/QHIN participation
+  agreements.
