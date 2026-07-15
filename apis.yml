@@ -144,6 +144,8 @@ apis:
     capability of the Communication API; the specific query/retrieve endpoint paths
     are partner-provisioned and not publicly documented.
 common:
+- type: AgenticAccess
+  url: agentic-access/kno2-agentic-access.yml
 - type: DomainSecurity
   url: security/kno2-domain-security.yml
 - type: Authentication
