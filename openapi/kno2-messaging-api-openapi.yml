@@ -1,0 +1,178 @@
+openapi: 3.0.3
+info:
+  title: Kno2 Communication Attachments Messaging API
+  description: 'Kno2 is a healthcare Interoperability-as-a-Service network. Through a single Communication API you SEND, RECEIVE, and FIND patient information - Direct Secure Messaging, clinical document exchange, HL7 FHIR, HL7 V2.x, and cloud fax - across Kno2''s private network, Carequality, eHealth Exchange, and TEFCA (Kno2 is a federally designated QHIN).
+
+
+    SCOPE AND SOURCING: The endpoints modeled in this document are the CONFIRMED messaging surface (api/token, api/messages, api/messages/{id}/attachments, api/documenttypes, api/directory/validate). They are grounded in Kno2''s own open-source integrator reference, the Kno2.ApiTestClient (https://github.com/Kno2/Kno2.ApiTestClient), whose configuration and helper code use these exact relative paths, HTTP verbs, and the OAuth2 client-credentials token flow. Request/response schemas are MODELED from that reference client and Kno2 product documentation; the full field-level contracts live behind the login-walled developer portal (https://developer.kno2.com) and are provisioned per partner.
+
+
+    Kno2 also markets FHIR resource query/retrieval and cross-network patient record location (Carequality / eHealth Exchange / TEFCA). Those are real product capabilities but their specific endpoint paths are partner-provisioned and NOT publicly documented, so they are intentionally omitted here rather than fabricated.
+
+
+    BASE HOST: Kno2 does not expose one shared public API host. Each integrator is provisioned a per-subscription tenant, e.g. https://{subscription}.kno2fy.com in production and https://{subscription}.kno2-stage.com in the staging sandbox. Access requires OAuth2 client credentials (client id + secret) and an IP allowlist configured by a Kno2 admin.'
+  version: '1.0'
+  contact:
+    name: Kno2
+    url: https://kno2.com
+    email: info@kno2.com
+  x-sourcing: Endpoints, paths, verbs, and the OAuth2 client-credentials token flow are CONFIRMED from Kno2's official ApiTestClient (github.com/Kno2/Kno2.ApiTestClient, app.config + ApiHelper.cs). Payload schemas are MODELED and simplified.
+servers:
+- url: https://{subscription}.kno2fy.com
+  description: Production tenant (per-integrator subscription host)
+  variables:
+    subscription:
+      default: your-subscription
+      description: The subscription/tenant slug assigned to your Kno2 account.
+- url: https://{subscription}.kno2-stage.com
+  description: Staging sandbox tenant (Kno2 Developer Program)
+  variables:
+    subscription:
+      default: your-subscription
+      description: The staging subscription/tenant slug assigned to your account.
+security:
+- bearerAuth: []
+tags:
+- name: Messaging
+  description: SEND surface - draft, populate, attach, and send messages.
+paths:
+  /api/messages:
+    put:
+      operationId: createMessageDraft
+      tags:
+      - Messaging
+      summary: Request a new draft message
+      description: Creates a new draft message and returns its identifier. CONFIRMED from ApiTestClient (RequestMessageDraft PUTs to api/messages).
+      responses:
+        '200':
+          description: The created draft message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/messages/{id}:
+    parameters:
+    - $ref: '#/components/parameters/MessageId'
+    put:
+      operationId: updateMessageDraft
+      tags:
+      - Messaging
+      summary: Populate / update a draft message
+      description: Updates a draft message with patient, recipient Direct address, document type, and metadata before sending. CONFIRMED from ApiTestClient (SendDraft PUTs the message resource to api/messages/{id}).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        '200':
+          description: The updated message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/messages/{id}/send:
+    parameters:
+    - $ref: '#/components/parameters/MessageId'
+    post:
+      operationId: sendMessage
+      tags:
+      - Messaging
+      summary: Send a message
+      description: Releases/sends the populated draft over Direct Secure Messaging or document exchange. CONFIRMED from ApiTestClient (SendRelease POSTs to api/messages/{id}/send).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        '200':
+          description: The message was accepted for sending.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or the token is missing/expired.
+  schemas:
+    Attachment:
+      type: object
+      description: MODELED - a clinical document attachment.
+      properties:
+        id:
+          type: string
+        fileName:
+          type: string
+        mediaType:
+          type: string
+          example: application/pdf
+        documentType:
+          type: string
+        size:
+          type: integer
+    Patient:
+      type: object
+      description: MODELED - patient demographics attached to a message.
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        gender:
+          type: string
+        mrn:
+          type: string
+          description: Medical record number.
+    Message:
+      type: object
+      description: MODELED - a Kno2 message resource. Field set simplified from the ApiTestClient MessageResource and product docs; the authoritative schema is provisioned per partner via developer.kno2.com.
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          example: draft
+        subject:
+          type: string
+        patient:
+          $ref: '#/components/schemas/Patient'
+        recipients:
+          type: array
+          items:
+            type: string
+            description: Direct Secure Messaging address.
+        documentType:
+          type: string
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        updatedDate:
+          type: string
+          format: date-time
+  parameters:
+    MessageId:
+      name: id
+      in: path
+      required: true
+      description: The message identifier.
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer access token obtained from POST /api/token.
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic with base64(client_id:client_secret), used only against /api/token to obtain a Bearer token.

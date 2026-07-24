@@ -1,0 +1,98 @@
+openapi: 3.0.3
+info:
+  title: Kno2 Communication Attachments Directory API
+  description: 'Kno2 is a healthcare Interoperability-as-a-Service network. Through a single Communication API you SEND, RECEIVE, and FIND patient information - Direct Secure Messaging, clinical document exchange, HL7 FHIR, HL7 V2.x, and cloud fax - across Kno2''s private network, Carequality, eHealth Exchange, and TEFCA (Kno2 is a federally designated QHIN).
+
+
+    SCOPE AND SOURCING: The endpoints modeled in this document are the CONFIRMED messaging surface (api/token, api/messages, api/messages/{id}/attachments, api/documenttypes, api/directory/validate). They are grounded in Kno2''s own open-source integrator reference, the Kno2.ApiTestClient (https://github.com/Kno2/Kno2.ApiTestClient), whose configuration and helper code use these exact relative paths, HTTP verbs, and the OAuth2 client-credentials token flow. Request/response schemas are MODELED from that reference client and Kno2 product documentation; the full field-level contracts live behind the login-walled developer portal (https://developer.kno2.com) and are provisioned per partner.
+
+
+    Kno2 also markets FHIR resource query/retrieval and cross-network patient record location (Carequality / eHealth Exchange / TEFCA). Those are real product capabilities but their specific endpoint paths are partner-provisioned and NOT publicly documented, so they are intentionally omitted here rather than fabricated.
+
+
+    BASE HOST: Kno2 does not expose one shared public API host. Each integrator is provisioned a per-subscription tenant, e.g. https://{subscription}.kno2fy.com in production and https://{subscription}.kno2-stage.com in the staging sandbox. Access requires OAuth2 client credentials (client id + secret) and an IP allowlist configured by a Kno2 admin.'
+  version: '1.0'
+  contact:
+    name: Kno2
+    url: https://kno2.com
+    email: info@kno2.com
+  x-sourcing: Endpoints, paths, verbs, and the OAuth2 client-credentials token flow are CONFIRMED from Kno2's official ApiTestClient (github.com/Kno2/Kno2.ApiTestClient, app.config + ApiHelper.cs). Payload schemas are MODELED and simplified.
+servers:
+- url: https://{subscription}.kno2fy.com
+  description: Production tenant (per-integrator subscription host)
+  variables:
+    subscription:
+      default: your-subscription
+      description: The subscription/tenant slug assigned to your Kno2 account.
+- url: https://{subscription}.kno2-stage.com
+  description: Staging sandbox tenant (Kno2 Developer Program)
+  variables:
+    subscription:
+      default: your-subscription
+      description: The staging subscription/tenant slug assigned to your account.
+security:
+- bearerAuth: []
+tags:
+- name: Directory
+  description: Validate Direct addresses and list document types.
+paths:
+  /api/documenttypes:
+    get:
+      operationId: listDocumentTypes
+      tags:
+      - Directory
+      summary: List document types
+      description: Lists the document types available to the current subscription. CONFIRMED from ApiTestClient (DocumentTypesUriTemplate = api/documenttypes).
+      responses:
+        '200':
+          description: A collection of document types.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/directory/validate:
+    get:
+      operationId: validateAddresses
+      tags:
+      - Directory
+      summary: Validate Direct addresses
+      description: Validates one or more Direct Secure Messaging addresses / endpoints before sending. CONFIRMED from ApiTestClient (DirectoryValidateTemplate = api/directory/validate).
+      parameters:
+      - name: addresses
+        in: query
+        description: One or more Direct addresses to validate.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A map of address to validity.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or the token is missing/expired.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer access token obtained from POST /api/token.
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic with base64(client_id:client_secret), used only against /api/token to obtain a Bearer token.
