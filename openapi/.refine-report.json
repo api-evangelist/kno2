@@ -1,0 +1,22 @@
+{
+  "provider": "kno2",
+  "sources": [
+    "kno2-attachments-api-openapi.yml",
+    "kno2-authentication-api-openapi.yml",
+    "kno2-directory-api-openapi.yml",
+    "kno2-intake-api-openapi.yml",
+    "kno2-messaging-api-openapi.yml"
+  ],
+  "outputs": [
+    "kno2-attachments-api-openapi.yml",
+    "kno2-authentication-api-openapi.yml",
+    "kno2-directory-api-openapi.yml",
+    "kno2-intake-api-openapi.yml",
+    "kno2-messaging-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
