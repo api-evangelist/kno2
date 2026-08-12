@@ -182,6 +182,11 @@ apis:
   - type: OpenCollection
     url: collections/kno2.opencollection.json
 common:
+- type: IssueTracker
+  url: https://github.com/Kno2/Kno2.ApiTestClient/issues
+- type: License
+  name: MIT
+  url: https://github.com/Kno2/Kno2.ApiTestClient/blob/master/LICENSE
 - type: AgenticAccess
   url: agentic-access/kno2-agentic-access.yml
 - type: DomainSecurity
