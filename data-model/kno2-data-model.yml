@@ -1,0 +1,41 @@
+generated: '2026-08-14'
+method: derived
+source: openapi/kno2-*-api-openapi.yml
+notes: >-
+  Derived from components.schemas $ref links across the five published
+  OpenAPI documents (Attachment/Patient/Message are duplicated verbatim across
+  the attachments/intake/messaging specs after tag-based splitting; they are
+  the same logical entities). No subway/ visual exists in this repo yet.
+entities:
+- name: Message
+  description: A Kno2 Communication API message (draft or sent), carrying patient demographics, recipients, and attachments.
+  fields: [id, status, subject, patient, recipients, documentType, attachments, updatedDate]
+  source: openapi/kno2-intake-api-openapi.yml#/components/schemas/Message
+- name: Patient
+  description: Patient demographics attached to a message.
+  fields: [firstName, lastName, dateOfBirth, gender, mrn]
+  source: openapi/kno2-intake-api-openapi.yml#/components/schemas/Patient
+- name: Attachment
+  description: A clinical document attachment on a message.
+  fields: [id, fileName, mediaType, documentType, size]
+  source: openapi/kno2-attachments-api-openapi.yml#/components/schemas/Attachment
+- name: AuthResponse
+  description: OAuth2 client-credentials token response.
+  fields: [access_token, token_type, expires_in, refresh_token]
+  source: openapi/kno2-authentication-api-openapi.yml#/components/schemas/AuthResponse
+relationships:
+- from: Message
+  to: Patient
+  type: has_one
+  via: patient
+- from: Message
+  to: Attachment
+  type: has_many
+  via: attachments
+- from: Attachment
+  to: Message
+  type: belongs_to
+  via: '{id} path parameter (message id)'
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

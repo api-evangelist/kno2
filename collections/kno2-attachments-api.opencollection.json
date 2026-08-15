@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kno2 Communication Attachments API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve an attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subscription}.kno2fy.com/api/messages/:id/attachments/:attachmentId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The message identifier."
+              },
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path",
+                "description": "The attachment identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves attachment metadata or its binary content (CCDA, PDF, image, HL7). CONFIRMED from ApiTestClient (AttachmentsUriTemplate)."
+        },
+        {
+          "info": {
+            "name": "Upload an attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subscription}.kno2fy.com/api/messages/:id/attachments/:attachmentId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The message identifier."
+              },
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path",
+                "description": "The attachment identifier."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "documentType",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads a clinical document to a draft message as multipart/form-data. CONFIRMED from ApiTestClient (UploadAttachment POSTs multipart content to api/messages/{id}/attachments/{attachmentId})."
+        },
+        {
+          "info": {
+            "name": "Mark an attachment as read",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{subscription}.kno2fy.com/api/messages/:id/attachments/:attachmentId/read",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The message identifier."
+              },
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path",
+                "description": "The attachment identifier."
+              }
+            ]
+          },
+          "docs": "Records that an attachment has been read/consumed. CONFIRMED from ApiTestClient (AttachmentReadUriTemplate = api/messages/{id}/attachments/{attachmentid}/read)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

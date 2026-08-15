@@ -1,0 +1,366 @@
+{
+  "item": [
+    {
+      "id": "c32e63fd-2218-4dfe-b80d-f858895ea4a2",
+      "name": "Directory",
+      "description": {
+        "content": "Validate Direct addresses and list document types.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a69c8352-41e0-4fde-a2cd-b970c17b6a9c",
+          "name": "List document types",
+          "request": {
+            "name": "List document types",
+            "description": {
+              "content": "Lists the document types available to the current subscription. CONFIRMED from ApiTestClient (DocumentTypesUriTemplate = api/documenttypes).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "documenttypes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                  "type": "any",
+                  "value": "{{subscription}}",
+                  "key": "subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ee8fe49-07c3-41ae-a316-b27c82078e06",
+              "name": "A collection of document types.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "documenttypes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72f1da24-c566-4bc7-a5e8-3c0809081984",
+              "name": "Authentication failed or the token is missing/expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "documenttypes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d8ce7ef-e463-4b36-92e0-eab4ea812b6d",
+          "name": "Validate Direct addresses",
+          "request": {
+            "name": "Validate Direct addresses",
+            "description": {
+              "content": "Validates one or more Direct Secure Messaging addresses / endpoints before sending. CONFIRMED from ApiTestClient (DirectoryValidateTemplate = api/directory/validate).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "directory",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "One or more Direct addresses to validate."
+                },
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "One or more Direct addresses to validate."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                  "type": "any",
+                  "value": "{{subscription}}",
+                  "key": "subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae253557-1442-4d03-812c-29cba19be161",
+              "name": "A map of address to validity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "directory",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76a0fb83-01d0-4c0f-9638-8bf504c972d8",
+              "name": "Authentication failed or the token is missing/expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "directory",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The subscription/tenant slug assigned to your Kno2 account.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-subscription",
+      "key": "subscription"
+    },
+    {
+      "type": "string",
+      "value": "https://{{subscription}}.kno2fy.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fbe4b275-24fd-4638-9b9e-23bb6841f7d1",
+    "name": "Kno2 Communication Attachments Directory API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Kno2 is a healthcare Interoperability-as-a-Service network. Through a single Communication API you SEND, RECEIVE, and FIND patient information - Direct Secure Messaging, clinical document exchange, HL7 FHIR, HL7 V2.x, and cloud fax - across Kno2's private network, Carequality, eHealth Exchange, and TEFCA (Kno2 is a federally designated QHIN).\n\nSCOPE AND SOURCING: The endpoints modeled in this document are the CONFIRMED messaging surface (api/token, api/messages, api/messages/{id}/attachments, api/documenttypes, api/directory/validate). They are grounded in Kno2's own open-source integrator reference, the Kno2.ApiTestClient (https://github.com/Kno2/Kno2.ApiTestClient), whose configuration and helper code use these exact relative paths, HTTP verbs, and the OAuth2 client-credentials token flow. Request/response schemas are MODELED from that reference client and Kno2 product documentation; the full field-level contracts live behind the login-walled developer portal (https://developer.kno2.com) and are provisioned per partner.\n\nKno2 also markets FHIR resource query/retrieval and cross-network patient record location (Carequality / eHealth Exchange / TEFCA). Those are real product capabilities but their specific endpoint paths are partner-provisioned and NOT publicly documented, so they are intentionally omitted here rather than fabricated.\n\nBASE HOST: Kno2 does not expose one shared public API host. Each integrator is provisioned a per-subscription tenant, e.g. https://{subscription}.kno2fy.com in production and https://{subscription}.kno2-stage.com in the staging sandbox. Access requires OAuth2 client credentials (client id + secret) and an IP allowlist configured by a Kno2 admin.\n\nContact Support:\n Name: Kno2\n Email: info@kno2.com",
+      "type": "text/plain"
+    }
+  }
+}

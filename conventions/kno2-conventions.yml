@@ -1,0 +1,50 @@
+generated: '2026-08-14'
+method: derived
+source: openapi/kno2-*-api-openapi.yml, authentication/kno2-authentication.yml, rate-limits/kno2-rate-limits.yml
+notes: >-
+  Derived from the OpenAPI operations and the ApiTestClient reference client.
+  Kno2 documents no idempotency-key header/parameter anywhere in its published
+  OpenAPI or the ApiTestClient - message drafting/sending has no client-supplied
+  idempotency token, so no `type: Idempotency` pointer is emitted alongside
+  this artifact (an honest absence, not an oversight).
+authentication:
+  style: oauth2-client-credentials
+  detail: >-
+    POST /api/token with HTTP Basic base64(client_id:client_secret) and
+    grant_type=client_credentials returns a Bearer access token; all other
+    operations require Authorization: Bearer <token>.
+  cross_link: authentication/kno2-authentication.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header/parameter is documented on any write operation (createMessageDraft, updateMessageDraft, sendMessage, uploadAttachment, processMessage).
+pagination:
+  supported: false
+  note: >-
+    searchMessages (GET /api/messages) is documented in the OpenAPI without
+    cursor/offset/page parameters or pagination response fields; the
+    ApiTestClient consumes it as a polling loop rather than a paged listing.
+field_expansion:
+  supported: false
+  note: No sparse-fieldset or ?expand= style parameter documented on any operation.
+metadata:
+  supported: false
+  note: No free-form metadata bag documented on Message/Attachment schemas.
+request_tracing:
+  supported: false
+  note: No request-id / trace-id header documented in the OpenAPI or ApiTestClient.
+versioning:
+  style: none-documented
+  cross_link: lifecycle/kno2-lifecycle.yml
+error_envelope:
+  shape: plain-description
+  note: >-
+    Error responses (401, 404) carry only a components.responses description
+    string, no JSON body schema, no application/problem+json content type.
+  cross_link: errors/kno2-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  note: No X-RateLimit-*/RateLimit-*/Retry-After response headers are documented; throughput is governed by the subscription agreement.
+  cross_link: rate-limits/kno2-rate-limits.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

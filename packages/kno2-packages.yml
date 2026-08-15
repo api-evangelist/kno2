@@ -1,0 +1,27 @@
+generated: '2026-08-14'
+method: searched
+source: https://api.github.com/orgs/Kno2/repos, https://registry.npmjs.org, https://pypi.org, https://azuresearch-usnc.nuget.org, https://rubygems.org, https://crates.io
+notes: >-
+  Kno2 does not publish an installable client library to any public package
+  registry. Searched npm (registry.npmjs.org/kno2 -> 404 not found), PyPI
+  (pypi.org/pypi/kno2/json -> 404), NuGet (azuresearch-usnc.nuget.org fuzzy
+  search returned unrelated packages, no Kno2 match), RubyGems (404), and
+  crates.io (403/absent). The only first-party client-facing code Kno2 publishes
+  is the Kno2.ApiTestClient reference implementation on GitHub, distributed as
+  source only (clone/build), not as a versioned registry package.
+packages:
+- language: csharp
+  registry: github
+  name: Kno2.ApiTestClient
+  url: https://github.com/Kno2/Kno2.ApiTestClient
+  install: 'git clone https://github.com/Kno2/Kno2.ApiTestClient'
+  official: true
+  version: null
+  published: null
+  note: >-
+    Reference API test client distributed as GitHub source only; not published
+    to NuGet or any other package registry, so no version/publish-date metadata
+    endpoint exists to query.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

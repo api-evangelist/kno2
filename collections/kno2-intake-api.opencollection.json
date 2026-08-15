@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kno2 Communication Attachments Intake API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Intake",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search / find messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subscription}.kno2fy.com/api/messages",
+            "params": [
+              {
+                "name": "statuses",
+                "value": "processed",
+                "type": "query"
+              },
+              {
+                "name": "processedtypes",
+                "value": "AwaitingEMRExport",
+                "type": "query"
+              },
+              {
+                "name": "isAll",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isUnassigned",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "orderBy",
+                "value": "updatedDate",
+                "type": "query"
+              },
+              {
+                "name": "orderDir",
+                "value": "desc",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "10",
+                "type": "query"
+              },
+              {
+                "name": "pageStart",
+                "value": "1",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search messages with filters. The reference intake loop polls with statuses=processed and processedtypes=AwaitingEMRExport to find inbound messages ready for EMR export (the RECEIVE / FIND queue). CONFIRMED from ApiTestClient (MessageSearchTemplate)."
+        },
+        {
+          "info": {
+            "name": "Retrieve a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subscription}.kno2fy.com/api/messages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The message identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves a single message by id. CONFIRMED from ApiTestClient."
+        },
+        {
+          "info": {
+            "name": "Process a message (read event)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subscription}.kno2fy.com/api/messages/:id/process",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The message identifier."
+              }
+            ]
+          },
+          "docs": "Marks a message as processed / records a read event. CONFIRMED from ApiTestClient (MessageReadEventUriTemplate = api/messages/{id}/process)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

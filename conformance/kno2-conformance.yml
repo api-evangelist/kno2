@@ -1,0 +1,63 @@
+generated: '2026-08-14'
+method: derived
+source: openapi/kno2-*-api-openapi.yml, apis.yml description, https://kno2.com/api/
+notes: >-
+  Derived from the published OpenAPI security schemes plus Kno2's own product
+  positioning (the FHIR/HIE/QHIN capabilities are documented product claims -
+  see the MODELED notes on kno2:kno2-fhir-api and kno2:kno2-record-query-api -
+  not confirmed against a public, testable FHIR endpoint). No compliance
+  certification (SOC 2 / ISO 27001 / HIPAA attestation / HITRUST) page was
+  found published at kno2.com, so no Compliance pointer is emitted from this
+  file - see security/ probe results (vulnerability-disclosure/trust-center:
+  none found).
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    All five OpenAPI files declare a bearerAuth (http/bearer) securityScheme
+    and authentication/kno2-authentication.yml documents an oauth2
+    clientCredentials flow against POST /api/token, confirmed against the
+    Kno2.ApiTestClient reference client.
+- id: fhir-r4
+  conforms: false
+  evidence: >-
+    Kno2 markets HL7 FHIR (DSTU3/R4) resource query/retrieval as a product
+    capability (Kno2-Connectivity-FHIR-2.1.pdf), but no FHIR-shaped OpenAPI
+    resource paths or a public FHIR base URL are published - the capability is
+    provisioned per partner. Recorded as not-conformant at the machine-readable
+    contract level; this is an honest gap, not a denial of the product claim.
+- id: hl7-v2
+  conforms: false
+  evidence: >-
+    HL7 V2.x is listed as a supported message format in Kno2's product
+    description, but is not represented as an OpenAPI-described resource or
+    operation.
+- id: direct-secure-messaging
+  conforms: true
+  evidence: >-
+    kno2-messaging-api-openapi.yml and kno2-directory-api-openapi.yml model
+    Direct address validation (validateAddresses) and message send
+    (sendMessage) confirmed against the ApiTestClient's DirectoryValidateTemplate
+    and message-send flow.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Error responses (401 Unauthorized, 404 Not Found) across all five specs
+    carry only a plain-text description in components.responses, with no
+    response body schema and no application/problem+json content type.
+- id: hipaa
+  conforms: true
+  evidence: >-
+    apis.yml description and authentication/kno2-authentication.yml note the
+    exchange involves protected health information (PHI) governed by HIPAA and
+    Kno2's network/QHIN participation agreements; no public HIPAA attestation
+    (e.g. a signed BAA template or compliance report) is published on kno2.com.
+- id: tefca-qhin
+  conforms: true
+  evidence: >-
+    Kno2 is publicly identified as a federally designated Qualified Health
+    Information Network (QHIN) participating in TEFCA and Carequality, per
+    kno2.com product/network pages ("Journey to QHIN").
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,250 @@
+{
+  "item": [
+    {
+      "id": "eadada5f-cb73-435a-bcdf-33d2eab1f64c",
+      "name": "Authentication",
+      "description": {
+        "content": "OAuth2 client-credentials token issuance.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "77b3f912-139d-4f28-a8d2-db35caf2e8df",
+          "name": "Issue an OAuth2 access token",
+          "request": {
+            "name": "Issue an OAuth2 access token",
+            "description": {
+              "content": "OAuth2 client-credentials token endpoint. Authenticate with HTTP Basic using base64(client_id:client_secret) and grant_type=client_credentials to receive a Bearer access token. A grant_type=refresh_token flow is also supported. CONFIRMED from ApiTestClient (AuthUri = api/token).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                  "type": "any",
+                  "value": "{{subscription}}",
+                  "key": "subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "refresh_token",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "72811c37-32e2-47da-bdc5-b550cc9ac10f",
+              "name": "An access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600,\n  \"refresh_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0d5d184-2184-4fb2-98a7-55b6b3b5436e",
+              "name": "Authentication failed or the token is missing/expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The subscription/tenant slug assigned to your Kno2 account.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-subscription",
+      "key": "subscription"
+    },
+    {
+      "type": "string",
+      "value": "https://{{subscription}}.kno2fy.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cbbf597d-7416-4d29-a0a8-43b92a9bbd13",
+    "name": "Kno2 Communication Attachments Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Kno2 is a healthcare Interoperability-as-a-Service network. Through a single Communication API you SEND, RECEIVE, and FIND patient information - Direct Secure Messaging, clinical document exchange, HL7 FHIR, HL7 V2.x, and cloud fax - across Kno2's private network, Carequality, eHealth Exchange, and TEFCA (Kno2 is a federally designated QHIN).\n\nSCOPE AND SOURCING: The endpoints modeled in this document are the CONFIRMED messaging surface (api/token, api/messages, api/messages/{id}/attachments, api/documenttypes, api/directory/validate). They are grounded in Kno2's own open-source integrator reference, the Kno2.ApiTestClient (https://github.com/Kno2/Kno2.ApiTestClient), whose configuration and helper code use these exact relative paths, HTTP verbs, and the OAuth2 client-credentials token flow. Request/response schemas are MODELED from that reference client and Kno2 product documentation; the full field-level contracts live behind the login-walled developer portal (https://developer.kno2.com) and are provisioned per partner.\n\nKno2 also markets FHIR resource query/retrieval and cross-network patient record location (Carequality / eHealth Exchange / TEFCA). Those are real product capabilities but their specific endpoint paths are partner-provisioned and NOT publicly documented, so they are intentionally omitted here rather than fabricated.\n\nBASE HOST: Kno2 does not expose one shared public API host. Each integrator is provisioned a per-subscription tenant, e.g. https://{subscription}.kno2fy.com in production and https://{subscription}.kno2-stage.com in the staging sandbox. Access requires OAuth2 client credentials (client id + secret) and an IP allowlist configured by a Kno2 admin.\n\nContact Support:\n Name: Kno2\n Email: info@kno2.com",
+      "type": "text/plain"
+    }
+  }
+}

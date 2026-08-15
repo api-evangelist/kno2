@@ -2,6 +2,11 @@ aid: kno2
 url: https://raw.githubusercontent.com/api-evangelist/kno2/refs/heads/main/apis.yml
 name: Kno2
 kind: company
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 17
+  pass: local-v1
 description: Kno2 provides Interoperability as a Service for healthcare - a single
   Communication API to SEND, RECEIVE, and FIND patient information across the
   healthcare ecosystem. One connection reaches Direct Secure Messaging, clinical
@@ -40,7 +45,7 @@ tags:
 - TEFCA
 - Carequality
 created: '2026-07-12'
-modified: '2026-07-12'
+modified: '2026-08-14'
 specificationVersion: '0.19'
 apis:
 - aid: kno2:kno2-fhir-api
@@ -207,6 +212,59 @@ common:
   url: rate-limits/kno2-rate-limits.yml
 - type: FinOps
   url: finops/kno2-finops.yml
+- type: DeveloperPortal
+  url: https://developer.kno2.com
+- type: APIReference
+  url: https://developer.kno2.com
+- type: Support
+  url: https://kno2.com/contact/
+- type: Blog
+  url: https://kno2.com/resources/blog/
+- type: TermsOfService
+  url: https://kno2.com/terms/
+- type: PrivacyPolicy
+  url: https://kno2.com/privacy-policy/
+- type: SignUp
+  url: https://kno2.com/request-a-demo/
+- type: Packages
+  url: packages/kno2-packages.yml
+- type: MCPServer
+  url: mcp/kno2-mcp.yml
+- type: LLMsTxt
+  url: llms/kno2-llms.txt
+- type: Overlay
+  name: Attachments overlay
+  url: overlays/kno2-attachments-api-overlay.yaml
+- type: Overlay
+  name: Authentication overlay
+  url: overlays/kno2-authentication-api-overlay.yaml
+- type: Overlay
+  name: Directory overlay
+  url: overlays/kno2-directory-api-overlay.yaml
+- type: Overlay
+  name: Intake overlay
+  url: overlays/kno2-intake-api-overlay.yaml
+- type: Overlay
+  name: Messaging overlay
+  url: overlays/kno2-messaging-api-overlay.yaml
+- type: Conformance
+  url: conformance/kno2-conformance.yml
+- type: ErrorCatalog
+  url: errors/kno2-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/kno2-lifecycle.yml
+- type: StatusPage
+  url: https://status.kno2.com
+- type: Conventions
+  url: conventions/kno2-conventions.yml
+- type: DataModel
+  url: data-model/kno2-data-model.yml
+- type: AgentSkill
+  name: Send a message via Kno2 Direct Secure Messaging
+  url: skills/kno2-send-a-message.md
+- type: AgentSkill
+  name: Process an inbound Kno2 message
+  url: skills/kno2-process-inbound-message.md
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

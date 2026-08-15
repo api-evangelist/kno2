@@ -1,0 +1,14 @@
+generated: '2026-08-14'
+method: generated
+skills:
+- file: kno2-send-a-message.md
+  name: Send a message via Kno2 Direct Secure Messaging
+  api: openapi/kno2-messaging-api-openapi.yml
+  operations: [createToken, validateAddresses, createMessageDraft, uploadAttachment, sendMessage]
+- file: kno2-process-inbound-message.md
+  name: Process an inbound Kno2 message
+  api: openapi/kno2-intake-api-openapi.yml
+  operations: [createToken, searchMessages, getMessage, getAttachment, markAttachmentRead, processMessage]
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

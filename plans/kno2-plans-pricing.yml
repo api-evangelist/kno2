@@ -4,7 +4,9 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Kno2
 providerId: kno2
 created: '2026-07-12'
-modified: '2026-07-12'
+modified: '2026-08-14'
+method: derived
+plan_count: 0
 reconciled: false
 tags:
 - Healthcare Interoperability
@@ -24,7 +26,11 @@ description: >-
 notes: >-
   Verify commercial terms directly with Kno2 (info@kno2.com, 888.390.6394) or via
   the developer portal at developer.kno2.com. A staging sandbox is available to
-  Developer Program participants for integration and testing.
+  Developer Program participants for integration and testing. plan_count is set
+  to 0 because Kno2 publishes no self-service, list-price plan tiers -
+  everything is enterprise contract/"contact sales" pricing; the two entries
+  under `plans:` below are modeled illustrative structure, not published tiers,
+  kept for context.
 sources:
 - https://kno2.com/
 - https://kno2.com/api/

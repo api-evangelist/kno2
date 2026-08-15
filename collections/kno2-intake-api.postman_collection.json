@@ -1,0 +1,676 @@
+{
+  "item": [
+    {
+      "id": "53ca20c6-e05d-4ff8-a72d-476b92f2aba8",
+      "name": "Intake",
+      "description": {
+        "content": "RECEIVE surface - search, retrieve, and process inbound messages.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1a961ffb-18a6-401e-a26e-887b99361b37",
+          "name": "Search / find messages",
+          "request": {
+            "name": "Search / find messages",
+            "description": {
+              "content": "Search messages with filters. The reference intake loop polls with statuses=processed and processedtypes=AwaitingEMRExport to find inbound messages ready for EMR export (the RECEIVE / FIND queue). CONFIRMED from ApiTestClient (MessageSearchTemplate).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "processedtypes",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isAll",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isUnassigned",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderDir",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageStart",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                  "type": "any",
+                  "value": "{{subscription}}",
+                  "key": "subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ac642ae9-88bd-441a-a9ce-dab3054a8344",
+              "name": "A page of messages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "statuses",
+                      "value": "processed"
+                    },
+                    {
+                      "key": "processedtypes",
+                      "value": "AwaitingEMRExport"
+                    },
+                    {
+                      "key": "isAll",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isUnassigned",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "updatedDate"
+                    },
+                    {
+                      "key": "orderDir",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "pageStart",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"draft\",\n      \"subject\": \"string\",\n      \"patient\": {\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"dateOfBirth\": \"1975-09-12\",\n        \"gender\": \"string\",\n        \"mrn\": \"string\"\n      },\n      \"recipients\": [\n        \"string\",\n        \"string\"\n      ],\n      \"documentType\": \"string\",\n      \"attachments\": [\n        {\n          \"id\": \"string\",\n          \"fileName\": \"string\",\n          \"mediaType\": \"application/pdf\",\n          \"documentType\": \"string\",\n          \"size\": 6460\n        },\n        {\n          \"id\": \"string\",\n          \"fileName\": \"string\",\n          \"mediaType\": \"application/pdf\",\n          \"documentType\": \"string\",\n          \"size\": 8765\n        }\n      ],\n      \"updatedDate\": \"2013-03-07T04:45:53.311Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"draft\",\n      \"subject\": \"string\",\n      \"patient\": {\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"dateOfBirth\": \"1978-04-19\",\n        \"gender\": \"string\",\n        \"mrn\": \"string\"\n      },\n      \"recipients\": [\n        \"string\",\n        \"string\"\n      ],\n      \"documentType\": \"string\",\n      \"attachments\": [\n        {\n          \"id\": \"string\",\n          \"fileName\": \"string\",\n          \"mediaType\": \"application/pdf\",\n          \"documentType\": \"string\",\n          \"size\": 5615\n        },\n        {\n          \"id\": \"string\",\n          \"fileName\": \"string\",\n          \"mediaType\": \"application/pdf\",\n          \"documentType\": \"string\",\n          \"size\": 5485\n        }\n      ],\n      \"updatedDate\": \"1958-05-11T04:52:42.137Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36fb7ff9-abdf-4a95-8d62-1faab44c5d70",
+              "name": "Authentication failed or the token is missing/expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "statuses",
+                      "value": "processed"
+                    },
+                    {
+                      "key": "processedtypes",
+                      "value": "AwaitingEMRExport"
+                    },
+                    {
+                      "key": "isAll",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isUnassigned",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "updatedDate"
+                    },
+                    {
+                      "key": "orderDir",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "pageStart",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e58c3153-ab2a-483c-ad5c-47e40d54a8da",
+          "name": "Retrieve a message",
+          "request": {
+            "name": "Retrieve a message",
+            "description": {
+              "content": "Retrieves a single message by id. CONFIRMED from ApiTestClient.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The message identifier."
+                },
+                {
+                  "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                  "type": "any",
+                  "value": "{{subscription}}",
+                  "key": "subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4d2f18ad-e107-4297-945d-c984d34e21f3",
+              "name": "The message.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The message identifier."
+                    },
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"draft\",\n  \"subject\": \"string\",\n  \"patient\": {\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"dateOfBirth\": \"1983-03-28\",\n    \"gender\": \"string\",\n    \"mrn\": \"string\"\n  },\n  \"recipients\": [\n    \"string\",\n    \"string\"\n  ],\n  \"documentType\": \"string\",\n  \"attachments\": [\n    {\n      \"id\": \"string\",\n      \"fileName\": \"string\",\n      \"mediaType\": \"application/pdf\",\n      \"documentType\": \"string\",\n      \"size\": 4070\n    },\n    {\n      \"id\": \"string\",\n      \"fileName\": \"string\",\n      \"mediaType\": \"application/pdf\",\n      \"documentType\": \"string\",\n      \"size\": 44\n    }\n  ],\n  \"updatedDate\": \"2012-06-28T14:28:31.106Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f377542-580e-4c5a-8ea0-92df56a5a4be",
+              "name": "Authentication failed or the token is missing/expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The message identifier."
+                    },
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c1d17a1a-d80c-4d1a-86a3-14f72126457d",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The message identifier."
+                    },
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd841e04-09f1-4b69-a331-1017abbf637b",
+          "name": "Process a message (read event)",
+          "request": {
+            "name": "Process a message (read event)",
+            "description": {
+              "content": "Marks a message as processed / records a read event. CONFIRMED from ApiTestClient (MessageReadEventUriTemplate = api/messages/{id}/process).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                ":id",
+                "process"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The message identifier."
+                },
+                {
+                  "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                  "type": "any",
+                  "value": "{{subscription}}",
+                  "key": "subscription"
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1516b1e-0e24-4dfc-b81f-1390cfe8b660",
+              "name": "The message was marked processed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":id",
+                    "process"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The message identifier."
+                    },
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d79f33f3-d05e-443a-9641-8c4689c268b8",
+              "name": "Authentication failed or the token is missing/expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":id",
+                    "process"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The message identifier."
+                    },
+                    {
+                      "description": "The subscription/tenant slug assigned to your Kno2 account.",
+                      "type": "any",
+                      "value": "{{subscription}}",
+                      "key": "subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The subscription/tenant slug assigned to your Kno2 account.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-subscription",
+      "key": "subscription"
+    },
+    {
+      "type": "string",
+      "value": "https://{{subscription}}.kno2fy.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d4c44226-9eab-4c4d-8cdc-5c2b0f297b23",
+    "name": "Kno2 Communication Attachments Intake API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Kno2 is a healthcare Interoperability-as-a-Service network. Through a single Communication API you SEND, RECEIVE, and FIND patient information - Direct Secure Messaging, clinical document exchange, HL7 FHIR, HL7 V2.x, and cloud fax - across Kno2's private network, Carequality, eHealth Exchange, and TEFCA (Kno2 is a federally designated QHIN).\n\nSCOPE AND SOURCING: The endpoints modeled in this document are the CONFIRMED messaging surface (api/token, api/messages, api/messages/{id}/attachments, api/documenttypes, api/directory/validate). They are grounded in Kno2's own open-source integrator reference, the Kno2.ApiTestClient (https://github.com/Kno2/Kno2.ApiTestClient), whose configuration and helper code use these exact relative paths, HTTP verbs, and the OAuth2 client-credentials token flow. Request/response schemas are MODELED from that reference client and Kno2 product documentation; the full field-level contracts live behind the login-walled developer portal (https://developer.kno2.com) and are provisioned per partner.\n\nKno2 also markets FHIR resource query/retrieval and cross-network patient record location (Carequality / eHealth Exchange / TEFCA). Those are real product capabilities but their specific endpoint paths are partner-provisioned and NOT publicly documented, so they are intentionally omitted here rather than fabricated.\n\nBASE HOST: Kno2 does not expose one shared public API host. Each integrator is provisioned a per-subscription tenant, e.g. https://{subscription}.kno2fy.com in production and https://{subscription}.kno2-stage.com in the staging sandbox. Access requires OAuth2 client credentials (client id + secret) and an IP allowlist configured by a Kno2 admin.\n\nContact Support:\n Name: Kno2\n Email: info@kno2.com",
+      "type": "text/plain"
+    }
+  }
+}

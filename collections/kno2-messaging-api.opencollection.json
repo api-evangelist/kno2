@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kno2 Communication Attachments Messaging API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messaging",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request a new draft message",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{subscription}.kno2fy.com/api/messages"
+          },
+          "docs": "Creates a new draft message and returns its identifier. CONFIRMED from ApiTestClient (RequestMessageDraft PUTs to api/messages)."
+        },
+        {
+          "info": {
+            "name": "Populate / update a draft message",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{subscription}.kno2fy.com/api/messages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The message identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a draft message with patient, recipient Direct address, document type, and metadata before sending. CONFIRMED from ApiTestClient (SendDraft PUTs the message resource to api/messages/{id})."
+        },
+        {
+          "info": {
+            "name": "Send a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subscription}.kno2fy.com/api/messages/:id/send",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The message identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Releases/sends the populated draft over Direct Secure Messaging or document exchange. CONFIRMED from ApiTestClient (SendRelease POSTs to api/messages/{id}/send)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

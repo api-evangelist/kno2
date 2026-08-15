@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kno2 Communication Attachments Directory API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Directory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List document types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subscription}.kno2fy.com/api/documenttypes"
+          },
+          "docs": "Lists the document types available to the current subscription. CONFIRMED from ApiTestClient (DocumentTypesUriTemplate = api/documenttypes)."
+        },
+        {
+          "info": {
+            "name": "Validate Direct addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subscription}.kno2fy.com/api/directory/validate",
+            "params": [
+              {
+                "name": "addresses",
+                "value": "",
+                "type": "query",
+                "description": "One or more Direct addresses to validate."
+              }
+            ]
+          },
+          "docs": "Validates one or more Direct Secure Messaging addresses / endpoints before sending. CONFIRMED from ApiTestClient (DirectoryValidateTemplate = api/directory/validate)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

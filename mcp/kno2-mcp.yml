@@ -1,0 +1,58 @@
+generated: '2026-08-14'
+method: derived
+status: candidate
+source: openapi/kno2-*-api-openapi.yml
+notes: >-
+  No official hosted/remote MCP server was found for Kno2. The Kno2 GitHub org
+  hosts a fork of the generic "git-mcp" tool (unrelated to the Communication
+  API) and no Kno2-specific MCP package on npm/PyPI. This is a derived candidate
+  tool list, one tool per OpenAPI operationId, not a claim that Kno2 ships an
+  MCP server.
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+server:
+  name: kno2
+  transport: null
+  url: null
+tools:
+- name: create_token
+  description: Obtain an OAuth2 client-credentials access token.
+  source_operation: openapi/kno2-authentication-api-openapi.yml#createToken
+- name: search_messages
+  description: Search/list inbound Communication API messages.
+  source_operation: openapi/kno2-intake-api-openapi.yml#searchMessages
+- name: get_message
+  description: Retrieve a single message by id.
+  source_operation: openapi/kno2-intake-api-openapi.yml#getMessage
+- name: process_message
+  description: Mark an inbound message as processed.
+  source_operation: openapi/kno2-intake-api-openapi.yml#processMessage
+- name: create_message_draft
+  description: Create a new outbound message draft.
+  source_operation: openapi/kno2-messaging-api-openapi.yml#createMessageDraft
+- name: update_message_draft
+  description: Update fields on an existing message draft.
+  source_operation: openapi/kno2-messaging-api-openapi.yml#updateMessageDraft
+- name: send_message
+  description: Send a drafted message over Direct/document exchange.
+  source_operation: openapi/kno2-messaging-api-openapi.yml#sendMessage
+- name: get_attachment
+  description: Retrieve a clinical document attachment on a message.
+  source_operation: openapi/kno2-attachments-api-openapi.yml#getAttachment
+- name: upload_attachment
+  description: Upload a clinical document attachment to a message.
+  source_operation: openapi/kno2-attachments-api-openapi.yml#uploadAttachment
+- name: mark_attachment_read
+  description: Mark a message attachment as read.
+  source_operation: openapi/kno2-attachments-api-openapi.yml#markAttachmentRead
+- name: list_document_types
+  description: List document types available to the current subscription.
+  source_operation: openapi/kno2-directory-api-openapi.yml#listDocumentTypes
+- name: validate_addresses
+  description: Validate one or more Direct Secure Messaging addresses.
+  source_operation: openapi/kno2-directory-api-openapi.yml#validateAddresses
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

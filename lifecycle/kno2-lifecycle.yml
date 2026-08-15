@@ -1,0 +1,27 @@
+generated: '2026-08-14'
+method: searched
+source: https://status.kno2.com, openapi/kno2-*-api-openapi.yml
+notes: >-
+  status.kno2.com is a live, Atlassian Statuspage-hosted page titled "Kno2
+  Status" (HTTP 200, "Welcome to Kno2's home for real-time and historical data
+  on system performance"). No public versioning policy, deprecation policy, or
+  Sunset/Deprecation (RFC 8594) header support was found documented on
+  kno2.com or in the OpenAPI - all five specs are at info.version 1.0 with no
+  operation marked deprecated. No SLA/uptime-target page was found publicly.
+versioning:
+  scheme: unknown
+  current: '1.0'
+  docs: null
+  note: All five OpenAPI documents declare info.version 1.0; no public versioning-scheme policy page was found.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No deprecation policy or Sunset/Deprecation header support found documented; no operation is marked deprecated in the OpenAPI.
+sla:
+  url: null
+  uptime_target: null
+status_page: https://status.kno2.com
+deprecated_operations: []
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

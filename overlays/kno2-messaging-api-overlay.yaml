@@ -1,0 +1,27 @@
+generated: '2026-08-14'
+method: generated
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Kno2 Messaging API
+  version: 1.0.0
+extends: openapi/kno2-messaging-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-rating: 4
+    x-apievangelist-notes: Kno2 Messaging API - part of the Communication API surface.
+      Reference implementation harvested from the Kno2.ApiTestClient GitHub repo;
+      the authoritative schema is provisioned per-partner via the login-gated developer.kno2.com
+      portal.
+- target: $.paths[*][?(@.operationId=='createMessageDraft')]
+  update:
+    x-apievangelist-conventions: conventions/kno2-conventions.yml
+    x-apievangelist-errors: errors/kno2-problem-types.yml
+- target: $.paths[*][?(@.operationId=='updateMessageDraft')]
+  update:
+    x-apievangelist-conventions: conventions/kno2-conventions.yml
+    x-apievangelist-errors: errors/kno2-problem-types.yml
+- target: $.paths[*][?(@.operationId=='sendMessage')]
+  update:
+    x-apievangelist-conventions: conventions/kno2-conventions.yml
+    x-apievangelist-errors: errors/kno2-problem-types.yml

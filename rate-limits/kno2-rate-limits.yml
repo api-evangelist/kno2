@@ -4,7 +4,9 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Kno2
 providerId: kno2
 created: '2026-07-12'
-modified: '2026-07-12'
+modified: '2026-08-14'
+method: derived
+limit_count: 0
 reconciled: false
 tags:
 - Healthcare Interoperability
@@ -25,6 +27,9 @@ notes: >-
   Kno2 requires TLS 1.2+ and an IP allowlist per subscription. Implement
   exponential backoff with jitter and honor Retry-After on any 429 responses.
   Poll intake queues on a reasonable interval (the reference client uses ~10s).
+  limit_count is set to 0 because no fixed numeric rate limit is documented
+  anywhere publicly - throughput is governed per subscription agreement, an
+  honest zero rather than an unset field.
 sources:
 - https://kno2.com/api/
 - https://developer.kno2.com

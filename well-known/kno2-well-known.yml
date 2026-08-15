@@ -1,0 +1,79 @@
+generated: '2026-08-14'
+method: searched
+source: live HTTP probes of every apis.yml host + OpenAPI servers hosts
+notes: >-
+  No provider-served .well-known document was found on any host. developer.kno2.com
+  redirects every path (302) to its ReadMe-hosted login gate rather than serving
+  content. app.kno2fy.com is a single-page app that answers HTTP 200 with the
+  same HTML shell for every path under /.well-known/, which is not a real
+  document (confirmed by fetching the body: it is the SPA's index.html, not
+  JSON/text). kno2.com (WordPress/Yoast) 404s on every well-known path except
+  llms.txt, which is captured separately in llms/. No WellKnown or SecurityTxt
+  pointer is emitted because nothing here is a real 200 document - this is a
+  recorded absence, not a presence.
+hosts:
+- host: kno2.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 301
+    note: WordPress permalink redirect to trailing-slash URL, which then 404s.
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+    note: Same WordPress redirect-then-404 pattern.
+  - path: /.well-known/api-catalog
+    status: 301
+    note: Same WordPress redirect-then-404 pattern.
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: developer.kno2.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 302
+    note: Redirects to the ReadMe developer-portal login gate, not a served document.
+  - path: /.well-known/agent.json
+    status: 302
+    note: Same login-gate redirect.
+  - path: /.well-known/security.txt
+    status: 302
+    note: Same login-gate redirect.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 302
+    note: Same login-gate redirect.
+  - path: /openapi.json
+    status: 302
+    note: Login-gate redirect, not a served spec.
+  - path: /swagger.json
+    status: 302
+    note: Login-gate redirect, not a served spec.
+- host: app.kno2fy.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    note: HTTP 200 but body is the SPA's HTML shell (index.html), not a JSON document. Not counted as a hit.
+  - path: /.well-known/agent.json
+    status: 200
+    note: Same SPA HTML shell.
+  - path: /.well-known/security.txt
+    status: 200
+    note: Same SPA HTML shell.
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: Same SPA HTML shell.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: Same SPA HTML shell.
+- host: kno2fy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

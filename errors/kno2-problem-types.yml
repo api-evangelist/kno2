@@ -1,0 +1,39 @@
+generated: '2026-08-14'
+method: derived
+format: none
+source: openapi/kno2-*-api-openapi.yml
+notes: >-
+  Derived from the 4xx responses actually declared in Kno2's five published
+  OpenAPI documents. Every error response is a shared components.responses
+  definition (Unauthorized / NotFound) carrying only a human-readable
+  `description` string - there is no response body schema and no
+  application/problem+json content-type, so this is not an RFC 9457 error
+  envelope. No provider error-code reference page was found publicly (the
+  richer error catalog, if any, sits behind the login-gated developer.kno2.com
+  portal).
+problems:
+- status: 401
+  title: Unauthorized
+  description: Authentication failed or the token is missing/expired.
+  source_operations:
+  - openapi/kno2-authentication-api-openapi.yml#createToken
+  - openapi/kno2-attachments-api-openapi.yml#getAttachment
+  - openapi/kno2-attachments-api-openapi.yml#uploadAttachment
+  - openapi/kno2-attachments-api-openapi.yml#markAttachmentRead
+  - openapi/kno2-directory-api-openapi.yml#listDocumentTypes
+  - openapi/kno2-directory-api-openapi.yml#validateAddresses
+  - openapi/kno2-intake-api-openapi.yml#searchMessages
+  - openapi/kno2-intake-api-openapi.yml#getMessage
+  - openapi/kno2-intake-api-openapi.yml#processMessage
+  - openapi/kno2-messaging-api-openapi.yml#createMessageDraft
+  - openapi/kno2-messaging-api-openapi.yml#updateMessageDraft
+  - openapi/kno2-messaging-api-openapi.yml#sendMessage
+- status: 404
+  title: Not Found
+  description: The requested resource was not found.
+  source_operations:
+  - openapi/kno2-attachments-api-openapi.yml#getAttachment
+  - openapi/kno2-intake-api-openapi.yml#getMessage
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
