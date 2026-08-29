@@ -16,6 +16,20 @@ description: Kno2 provides Interoperability as a Service for healthcare - a sing
   partner/enterprise gated - integrators are provisioned a per-subscription tenant
   host with OAuth2 client-credentials keys and an IP allowlist; a staging sandbox
   is available through the Kno2 Developer Program.
+deliveryModel:
+  model: open-core
+  license: MIT
+  open_source: true
+  commercial: true
+  callable_host: true
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
