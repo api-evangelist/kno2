@@ -1,0 +1,49 @@
+slug: kno2
+provider: Kno2
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Healthcare Providers
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Intake
+  spec_file: kno2-intake-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.8
+  evidence: GET /api/messages 'Search / find messages', POST /api/messages/{id}/process 'Process a message
+    (read event)'; schemas Patient, Attachment, Message
+  reason: Inbound receipt and processing of patient-information messages over Direct/Carequality/TEFCA
+    connections — operation of health information exchange endpoints for the provider. The Patient schema
+    confirms these carry clinical patient data rather than generic messaging.
+- tag: Messaging
+  spec_file: kno2-messaging-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.8
+  evidence: POST /api/messages/{id}/send 'Send a message'; schemas Patient, Attachment, Message; 'a single
+    Communication API you SEND, RECEIVE, and FIND patient information'
+  reason: Outbound send of clinical messages carrying patient records across Direct Secure Messaging and
+    the national exchange networks; this is provider-side healthcare interoperability operation, not generic
+    notification messaging.
+- tag: Attachments
+  spec_file: kno2-attachments-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.75
+  evidence: 'POST /api/messages/{id}/attachments/{attachmentId} ''Upload an attachment''; vendor context:
+    ''clinical document exchange, HL7 FHIR resources, HL7 V2.x, and cloud fax ... Carequality, eHealth
+    Exchange, and TEFCA'''
+  reason: Attachments here are the clinical documents carried on Direct Secure Messages across the health
+    information exchange network, i.e. operation of interoperability connections for exchanging patient
+    information. Slightly reduced confidence because the operations themselves are generic file get/put/mark-read.

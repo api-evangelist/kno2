@@ -201,6 +201,9 @@ apis:
   - type: OpenCollection
     url: collections/kno2.opencollection.json
 common:
+- type: CapabilityMap
+  url: capabilities/kno2-capability-edges.yml
+  name: Kno2 Business Capability Map
 - type: IssueTracker
   url: https://github.com/Kno2/Kno2.ApiTestClient/issues
 - type: License
