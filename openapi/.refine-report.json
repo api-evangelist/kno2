@@ -1,11 +1,7 @@
 {
   "provider": "kno2",
   "sources": [
-    "kno2-attachments-api-openapi.yml",
-    "kno2-authentication-api-openapi.yml",
-    "kno2-directory-api-openapi.yml",
-    "kno2-intake-api-openapi.yml",
-    "kno2-messaging-api-openapi.yml"
+    "_original/kno2-openapi.yml"
   ],
   "outputs": [
     "kno2-attachments-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "kno2-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "kno2-attachments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kno2-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kno2-directory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kno2-intake-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kno2-messaging-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
