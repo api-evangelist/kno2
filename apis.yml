@@ -46,6 +46,20 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kno2.png
 tags:
+- Interoperability
+- Clinical Records
+- Health Information Exchange
+- Direct Secure Messaging
+- FHIR
+- Clinical Documents
+- Patient Records
+- Healthcare
+- HIE
+- Care Coordination
+- QHIN
+- TEFCA
+- Carequality
+tags_raw:
 - Healthcare Interoperability
 - Clinical Records
 - Health Information Exchange

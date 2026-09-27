@@ -61,6 +61,9 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or the token is missing/expired.
   schemas:
     AuthResponse:
       type: object
@@ -76,9 +79,6 @@ components:
           example: 3600
         refresh_token:
           type: string
-  responses:
-    Unauthorized:
-      description: Authentication failed or the token is missing/expired.
   securitySchemes:
     bearerAuth:
       type: http

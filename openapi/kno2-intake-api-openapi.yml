@@ -123,22 +123,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Patient:
-      type: object
-      description: MODELED - patient demographics attached to a message.
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        dateOfBirth:
-          type: string
-          format: date
-        gender:
-          type: string
-        mrn:
-          type: string
-          description: Medical record number.
     Attachment:
       type: object
       description: MODELED - a clinical document attachment.
@@ -181,6 +165,22 @@ components:
         updatedDate:
           type: string
           format: date-time
+    Patient:
+      type: object
+      description: MODELED - patient demographics attached to a message.
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        gender:
+          type: string
+        mrn:
+          type: string
+          description: Medical record number.
   parameters:
     MessageId:
       name: id
