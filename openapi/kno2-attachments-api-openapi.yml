@@ -95,6 +95,26 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication failed or the token is missing/expired.
+  parameters:
+    MessageId:
+      name: id
+      in: path
+      required: true
+      description: The message identifier.
+      schema:
+        type: string
+    AttachmentId:
+      name: attachmentId
+      in: path
+      required: true
+      description: The attachment identifier.
+      schema:
+        type: string
   schemas:
     Attachment:
       type: object
@@ -111,26 +131,6 @@ components:
           type: string
         size:
           type: integer
-  parameters:
-    MessageId:
-      name: id
-      in: path
-      required: true
-      description: The message identifier.
-      schema:
-        type: string
-    AttachmentId:
-      name: attachmentId
-      in: path
-      required: true
-      description: The attachment identifier.
-      schema:
-        type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-    Unauthorized:
-      description: Authentication failed or the token is missing/expired.
   securitySchemes:
     bearerAuth:
       type: http

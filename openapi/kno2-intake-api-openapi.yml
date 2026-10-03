@@ -123,21 +123,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Attachment:
-      type: object
-      description: MODELED - a clinical document attachment.
-      properties:
-        id:
-          type: string
-        fileName:
-          type: string
-        mediaType:
-          type: string
-          example: application/pdf
-        documentType:
-          type: string
-        size:
-          type: integer
     Message:
       type: object
       description: MODELED - a Kno2 message resource. Field set simplified from the ApiTestClient MessageResource and product docs; the authoritative schema is provisioned per partner via developer.kno2.com.
@@ -181,6 +166,26 @@ components:
         mrn:
           type: string
           description: Medical record number.
+    Attachment:
+      type: object
+      description: MODELED - a clinical document attachment.
+      properties:
+        id:
+          type: string
+        fileName:
+          type: string
+        mediaType:
+          type: string
+          example: application/pdf
+        documentType:
+          type: string
+        size:
+          type: integer
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication failed or the token is missing/expired.
   parameters:
     MessageId:
       name: id
@@ -189,11 +194,6 @@ components:
       description: The message identifier.
       schema:
         type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-    Unauthorized:
-      description: Authentication failed or the token is missing/expired.
   securitySchemes:
     bearerAuth:
       type: http
