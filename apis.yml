@@ -2,6 +2,9 @@ aid: kno2
 url: https://raw.githubusercontent.com/api-evangelist/kno2/refs/heads/main/apis.yml
 name: Kno2
 kind: company
+x-docs-platform: readme
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-10-03
 x-enrichment:
   date: '2026-08-14'
   status: enriched
