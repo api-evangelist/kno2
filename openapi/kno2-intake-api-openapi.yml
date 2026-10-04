@@ -122,7 +122,36 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or the token is missing/expired.
+    NotFound:
+      description: The requested resource was not found.
+  parameters:
+    MessageId:
+      name: id
+      in: path
+      required: true
+      description: The message identifier.
+      schema:
+        type: string
   schemas:
+    Patient:
+      type: object
+      description: MODELED - patient demographics attached to a message.
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        gender:
+          type: string
+        mrn:
+          type: string
+          description: Medical record number.
     Message:
       type: object
       description: MODELED - a Kno2 message resource. Field set simplified from the ApiTestClient MessageResource and product docs; the authoritative schema is provisioned per partner via developer.kno2.com.
@@ -150,22 +179,6 @@ components:
         updatedDate:
           type: string
           format: date-time
-    Patient:
-      type: object
-      description: MODELED - patient demographics attached to a message.
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        dateOfBirth:
-          type: string
-          format: date
-        gender:
-          type: string
-        mrn:
-          type: string
-          description: Medical record number.
     Attachment:
       type: object
       description: MODELED - a clinical document attachment.
@@ -181,19 +194,6 @@ components:
           type: string
         size:
           type: integer
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-    Unauthorized:
-      description: Authentication failed or the token is missing/expired.
-  parameters:
-    MessageId:
-      name: id
-      in: path
-      required: true
-      description: The message identifier.
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http
