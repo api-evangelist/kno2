@@ -1,0 +1,22 @@
+edges:
+- partner_name: TEFCA (RCE, The Sequoia Project)
+  partner: null
+  type: contract
+  channel: network-directory
+  relationship: network-participant
+  direction: partner-built
+  evidence: https://rce.sequoiaproject.org/wp-json/wp/v2/qhins
+  contract_reference:
+    network: TEFCA (RCE, The Sequoia Project)
+    spec_file: null
+    role: QHIN
+    listed_name: Kno2
+    listing_page: https://rce.sequoiaproject.org/qhins/kno2/
+    network_id: 1713
+    matched_domain: kno2.com
+    detected_by: sweep-health-networks.py
+    detected: '2026-10-12'
+generated: '2026-10-12'
+method: searched
+checked:
+- https://rce.sequoiaproject.org/wp-json/wp/v2/qhins
