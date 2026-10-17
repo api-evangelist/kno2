@@ -122,11 +122,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Authentication failed or the token is missing/expired.
-    NotFound:
-      description: The requested resource was not found.
   parameters:
     MessageId:
       name: id
@@ -135,23 +130,27 @@ components:
       description: The message identifier.
       schema:
         type: string
+  responses:
+    Unauthorized:
+      description: Authentication failed or the token is missing/expired.
+    NotFound:
+      description: The requested resource was not found.
   schemas:
-    Patient:
+    Attachment:
       type: object
-      description: MODELED - patient demographics attached to a message.
+      description: MODELED - a clinical document attachment.
       properties:
-        firstName:
+        id:
           type: string
-        lastName:
+        fileName:
           type: string
-        dateOfBirth:
+        mediaType:
           type: string
-          format: date
-        gender:
+          example: application/pdf
+        documentType:
           type: string
-        mrn:
-          type: string
-          description: Medical record number.
+        size:
+          type: integer
     Message:
       type: object
       description: MODELED - a Kno2 message resource. Field set simplified from the ApiTestClient MessageResource and product docs; the authoritative schema is provisioned per partner via developer.kno2.com.
@@ -179,21 +178,22 @@ components:
         updatedDate:
           type: string
           format: date-time
-    Attachment:
+    Patient:
       type: object
-      description: MODELED - a clinical document attachment.
+      description: MODELED - patient demographics attached to a message.
       properties:
-        id:
+        firstName:
           type: string
-        fileName:
+        lastName:
           type: string
-        mediaType:
+        dateOfBirth:
           type: string
-          example: application/pdf
-        documentType:
+          format: date
+        gender:
           type: string
-        size:
-          type: integer
+        mrn:
+          type: string
+          description: Medical record number.
   securitySchemes:
     bearerAuth:
       type: http

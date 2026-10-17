@@ -95,11 +95,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Authentication failed or the token is missing/expired.
-    NotFound:
-      description: The requested resource was not found.
   parameters:
     MessageId:
       name: id
@@ -115,6 +110,11 @@ components:
       description: The attachment identifier.
       schema:
         type: string
+  responses:
+    Unauthorized:
+      description: Authentication failed or the token is missing/expired.
+    NotFound:
+      description: The requested resource was not found.
   schemas:
     Attachment:
       type: object
