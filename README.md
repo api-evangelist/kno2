@@ -1,4 +1,4 @@
-# Kno2 (kno2)
+# Kno2
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,94 +64,150 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kno2 provides **Interoperability as a Service** for healthcare - a single Communication API to **SEND, RECEIVE, and FIND** patient information across the healthcare ecosystem. One connection reaches Direct Secure Messaging, clinical document exchange, HL7 FHIR resources, HL7 V2.x, cloud fax, and national record location and retrieval through Kno2's private network, Carequality, eHealth Exchange, and TEFCA. Kno2 is a federally designated Qualified Health Information Network (QHIN) and a Carequality implementor.
+Kno2 provides Interoperability as a Service for healthcare - a single Communication API to SEND, RECEIVE, and FIND patient information across the healthcare ecosystem. One connection reaches Direct Secure Messaging, clinical document exchange, HL7 FHIR resources, HL7 V2.x, cloud fax, and national record location and retrieval through Kno2's private network, Carequality, eHealth Exchange, and TEFCA (Kno2 is a federally designated QHIN). API access is partner/enterprise gated - integrators are provisioned a per-subscription tenant host with OAuth2 client-credentials keys and an IP allowlist; a staging sandbox is available through the Kno2 Developer Program.
 
-## Access model (read first)
+**Areas:** Interoperability · Clinical Records · Health Information Exchange · Direct Secure Messaging · FHIR · Clinical Documents · Patient Records · Healthcare · HIE · Care Coordination · QHIN · TEFCA
 
-Kno2's API is **partner / enterprise gated - there is no self-service public API host and no public base URL.** Onboarding runs through the **Kno2 Developer Program** and the login-walled developer portal at [developer.kno2.com](https://developer.kno2.com) (ReadMe-hosted).
+## Kno2 on APIs.io
 
-- **Per-subscription tenant host.** Each integrator is provisioned its own tenant, e.g. `https://{subscription}.kno2fy.com` in production and `https://{subscription}.kno2-stage.com` in the staging sandbox.
-- **OAuth2 client credentials.** You are issued a client id, client secret, and app id. You exchange `base64(client_id:client_secret)` at `POST /api/token` (grant_type `client_credentials`) for a Bearer access token; a `refresh_token` grant is also supported.
-- **IP allowlist.** Your calling machine's public IP address must be allowlisted by a Kno2 admin. TLS 1.2 or higher is required.
-- **HIPAA / regulated exchange.** This is protected health information (PHI) exchange. Use is governed by HIPAA and Kno2's network/QHIN participation agreements.
+Everything profiled for Kno2 is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kno2/](https://apis.io/providers/kno2/)** — or go straight to one of the APIs or properties below.
 
-## How this entry was sourced
+### APIs (7)
 
-The endpoint paths, HTTP verbs, and OAuth2 token flow below are **confirmed** from Kno2's own open-source integrator reference, the [Kno2.ApiTestClient](https://github.com/Kno2/Kno2.ApiTestClient) (its `app.config` URI templates and `ApiHelper.cs`). Request/response **schemas are modeled** from that client plus Kno2 product documentation, because field-level contracts live behind the login-walled developer portal. Kno2's **FHIR** resource query and **cross-network record retrieval** (Carequality / eHealth Exchange / TEFCA) are real documented products, but their specific endpoint paths are partner-provisioned and not public, so they are described here without invented paths.
+- [Kno2 FHIR API](https://apis.io/apis/kno2/kno2-fhir-api/) — HL7 FHIR (DSTU3/R4) resource query and retrieval at scale, including USCDI data classes and patient demographic search, brokered through Kno2's gateway to…
+- [Kno2 Patient Record Query API](https://apis.io/apis/kno2/kno2-record-query-api/) — On-demand patient record location and retrieval across national networks - Kno2's private network, Carequality, eHealth Exchange, and TEFCA (Kno2 is a…
+- [Kno2 Attachments API](https://apis.io/apis/kno2/kno2-attachments-api/) — Upload, retrieve, and mark clinical document attachments.
+- [Kno2 Authentication API](https://apis.io/apis/kno2/kno2-authentication-api/) — OAuth2 client-credentials token issuance.
+- [Kno2 Directory API](https://apis.io/apis/kno2/kno2-directory-api/) — Validate Direct addresses and list document types.
+- [Kno2 Intake API](https://apis.io/apis/kno2/kno2-intake-api/) — RECEIVE surface - search, retrieve, and process inbound messages.
+- [Kno2 Messaging API](https://apis.io/apis/kno2/kno2-messaging-api/) — SEND surface - draft, populate, attach, and send messages.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/kno2/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/kno2/refs/heads/main/apis.yml)
+### Published properties
 
-## Tags
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- Healthcare Interoperability
-- Clinical Records
-- Health Information Exchange
-- Direct Secure Messaging
-- FHIR
-- Clinical Documents
-- Patient Records
-- Healthcare
-- HIE
-- Care Coordination
-- QHIN
-- TEFCA
-- Carequality
+#### MCP servers (1)
 
-## Timestamps
+Model Context Protocol servers that expose the API to agents.
 
-- **Created:** 2026-07-12
-- **Modified:** 2026-07-12
+- [kno2](https://apis.io/servers/kno2/kno2/)
 
-## APIs
+#### Agentic access (1)
 
-### Kno2 Messaging API (confirmed)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The SEND surface. Request a draft message, populate it with the patient, recipient Direct address, document type, and metadata, attach one or more clinical documents (CCDA, PDF, images, HL7), then send it as Direct Secure Messaging or document exchange.
+- [Kno2 Agentic Access](https://apis.io/agentic-access/kno2/kno2-agentic-access/)
 
-- **Base URL:** `https://{subscription}.kno2fy.com`
-- `PUT /api/messages` — request a new draft message
-- `PUT /api/messages/{id}` — populate/update the draft (patient, recipients, document type)
-- `POST /api/messages/{id}/attachments/{attachmentId}` — upload a clinical document (multipart)
-- `POST /api/messages/{id}/send` — send/release the message
+#### Collections (6)
 
-### Kno2 Intake and Retrieval API (confirmed)
+Postman and Open Collection request collections.
 
-The RECEIVE / FIND surface. Poll the intake queue for inbound messages awaiting EMR export, retrieve messages and attachment content, mark attachments read, and process messages.
+- [Kno2 Communication API](https://apis.io/collections/kno2/open-kno2/)
+- [Kno2 Communication Attachments API](https://apis.io/collections/kno2/open-kno2-attachments-api/)
+- [Kno2 Communication Attachments Authentication API](https://apis.io/collections/kno2/open-kno2-authentication-api/)
+- [Kno2 Communication Attachments Directory API](https://apis.io/collections/kno2/open-kno2-directory-api/)
+- [Kno2 Communication Attachments Intake API](https://apis.io/collections/kno2/open-kno2-intake-api/)
+- [Kno2 Communication Attachments Messaging API](https://apis.io/collections/kno2/open-kno2-messaging-api/)
 
-- `GET /api/messages?statuses=processed&processedtypes=AwaitingEMRExport` — find intake messages
-- `GET /api/messages/{id}` — retrieve a message
-- `GET /api/messages/{id}/attachments/{attachmentId}` — retrieve attachment metadata/content
-- `PUT /api/messages/{id}/attachments/{attachmentId}/read` — mark attachment read
-- `POST /api/messages/{id}/process` — process / record read event
+#### Overlays (5)
 
-### Kno2 Directory API (confirmed)
+OpenAPI overlays, including conversational phrasing for each operation.
 
-- `GET /api/directory/validate?addresses=...` — validate Direct Secure Messaging addresses
-- `GET /api/documenttypes` — list document types available to the subscription
+- [Kno2 Attachments Api Overlay](https://apis.io/overlays/kno2/kno2-attachments-api-overlay/)
+- [Kno2 Authentication Api Overlay](https://apis.io/overlays/kno2/kno2-authentication-api-overlay/)
+- [Kno2 Directory Api Overlay](https://apis.io/overlays/kno2/kno2-directory-api-overlay/)
+- [Kno2 Intake Api Overlay](https://apis.io/overlays/kno2/kno2-intake-api-overlay/)
+- [Kno2 Messaging Api Overlay](https://apis.io/overlays/kno2/kno2-messaging-api-overlay/)
 
-### Kno2 FHIR API (modeled)
+#### Security (2)
 
-HL7 FHIR (DSTU3 / R4) resource query and retrieval at scale, including USCDI data classes and patient demographic search, brokered through Kno2's gateway to Carequality and national FHIR endpoints. Documented as a product capability of the Communication API; specific FHIR base URL and resource paths are partner-provisioned and not publicly documented.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Reference:** [Kno2 FHIR connectivity brief](https://kno2.com/wp-content/uploads/2022/09/Kno2-Connectivity-FHIR-2.1.pdf)
+- [Kno2 Authentication](https://apis.io/security/kno2/kno2-authentication/)
+- [Kno2 Domain Security](https://apis.io/security/kno2/kno2-domain-security/)
 
-### Kno2 Patient Record Query API (modeled)
+#### Plans and pricing (1)
 
-On-demand patient record location and retrieval across national networks - Kno2's private network, Carequality, eHealth Exchange, and TEFCA (Kno2 is a designated QHIN). Documented product capability; specific query/retrieve endpoint paths are partner-provisioned and not publicly documented.
+Published plans, tiers and prices.
 
-## Common Properties
+- [Kno2 Plans Pricing](https://apis.io/plans/kno2/kno2-plans-pricing/)
 
-- [Domain Security](security/kno2-domain-security.yml)
-- [Authentication](authentication/kno2-authentication.yml)
-- [GitHub Organization](https://github.com/Kno2)
-- [LinkedIn](https://www.linkedin.com/company/kno2)
+#### Rate limits (1)
+
+Published request limits.
+
+- [Kno2 Rate Limits](https://apis.io/rate-limits/kno2/kno2-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Kno2 Finops](https://apis.io/finops/kno2/kno2-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://kno2.com)
 - [Documentation](https://developer.kno2.com)
-- [Plans](plans/kno2-plans-pricing.yml)
-- [Rate Limits](rate-limits/kno2-rate-limits.yml)
-- [Fin Ops](finops/kno2-finops.yml)
+- [API reference](https://developer.kno2.com)
+- [Sign up](https://kno2.com/request-a-demo/)
+- [Support](https://kno2.com/contact/)
+- [Blog](https://kno2.com/resources/blog/)
+- [Terms of service](https://kno2.com/terms/)
+- [Privacy policy](https://kno2.com/privacy-policy/)
+- [GitHub](https://github.com/Kno2)
+- [Status](https://status.kno2.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 36.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 50.9 |
+| Contract governance | 4.5 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 38.7 |
+| Access clarity | 22.4 |
+
+**Agent readiness 22.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.4** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kno2/](https://apis.io/providers/kno2/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Kno2: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kno2/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
